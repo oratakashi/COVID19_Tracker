@@ -123,4 +123,7 @@
     <string name="title_data_source">Data Source?</string>
     <string name="title_contact_detail">If you have something to ask, or offer me a job, you can contact me below</string>
     <string name="title_source_code">Can I have the source code for this apps?</string>
+    <string name="title_description_source_code">Of course, this application is open source and you may use, modify, and develop this application, you can download this source code at:</string>
+    <string name="title_covid19">COVID19</string>
+    <string name="title_tracker">Tracker</string>
 </resources>

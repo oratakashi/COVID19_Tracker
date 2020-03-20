@@ -116,6 +116,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, MainInterfaces {
     }
 
     override fun resultConfirmed(data: List<DataConfirm>) {
+        bsHome.state = BottomSheetBehavior.STATE_COLLAPSED
         mMap.clear()
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(-0.7893, 113.9213), 1f))
         data.forEach {
@@ -140,6 +141,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, MainInterfaces {
     }
 
     override fun resultRecovered(data: List<DataRecovered>) {
+        bsHome.state = BottomSheetBehavior.STATE_COLLAPSED
         mMap.clear()
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(-0.7893, 113.9213), 1f))
         data.forEach {
@@ -164,6 +166,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, MainInterfaces {
     }
 
     override fun resultDeath(data: List<DataDeath>) {
+        bsHome.state = BottomSheetBehavior.STATE_COLLAPSED
         mMap.clear()
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(-0.7893, 113.9213), 1f))
         data.forEach {

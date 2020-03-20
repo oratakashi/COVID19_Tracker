@@ -82,4 +82,6 @@
     <dimen name="size_28">28dp</dimen>
     <dimen name="radius_10">10dp</dimen>
     <dimen name="size_86">86dp</dimen>
+    <dimen name="font_46">46sp</dimen>
+    <dimen name="margin_75">75dp</dimen>
 </resources>
