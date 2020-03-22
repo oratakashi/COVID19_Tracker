@@ -83,7 +83,7 @@ class ProvinceFragment(val parent : MainInterfaces) : Fragment() {
         })
         viewModel.responseProvince.observe(this, Observer { response ->
             response?.let{
-                when(it.status.isMaintence){
+                when(it.data.isEmpty()){
                     true -> {
                         rvProvince.visibility = View.GONE
                         llMaintence.visibility = View.VISIBLE

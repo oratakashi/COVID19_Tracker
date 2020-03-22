@@ -23,7 +23,7 @@ interface ApiEndpoint {
     @GET("query")
     fun getDataBNPB(
         @Query("where") where : String = "1=1",
-        @Query("outFields") outFields : String = "Provinsi,Kasus_Terkonfirmasi_Akumulatif,Kasus_Sembuh_Akumulatif,Kasus_Meninggal_Akumulatif,Pembaruan",
+        @Query("outFields") outFields : String = "*",
         @Query("outSR") outSR : String = "4326",
         @Query("f") f : String = "json"
     ) : Single<ResponseProvince>

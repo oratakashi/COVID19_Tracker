@@ -8,6 +8,8 @@ import com.oratakashi.covid19.R
 import com.oratakashi.covid19.data.model.province.DataProvince
 import com.oratakashi.covid19.ui.main.MainInterfaces
 import kotlinx.android.synthetic.main.adapter_list.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ProvinceAdapter(
     val data : List<DataProvince>, val parent : MainInterfaces
@@ -29,7 +31,10 @@ class ProvinceAdapter(
         holder.itemView.tvRecovered.text = "Recovered : ${data[position].attributes.recovered} Orang"
         holder.itemView.tvDeath.text = "Deaths : ${data[position].attributes.death} Orang"
         holder.itemView.tvUpdate.visibility = View.VISIBLE
-        holder.itemView.tvUpdate.text = "Diperbarui : ${data[position].attributes.updates}"
+
+        val df = SimpleDateFormat("dd MMMM yyyy")
+
+        holder.itemView.tvUpdate.text = "Diperbarui : ${df.format(Calendar.getInstance().time)}"
 
         holder.itemView.llAdapter.setOnClickListener {
             parent.getLocation(
