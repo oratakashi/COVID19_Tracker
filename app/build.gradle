@@ -11,8 +11,8 @@ android {
         applicationId "com.oratakashi.covid19"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -22,10 +22,14 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField 'String', 'BASE_URL', '"https://covid19.mathdro.id/"'
+            buildConfigField 'String', 'BASE_URL_BNPB', '"https://services5.arcgis.com/VS6HdKS0VfIhv8Ct/arcgis/rest/services/COVID19_Indonesia_per_Provinsi/FeatureServer/0/"'
+            buildConfigField 'String', 'BASE_URL_ORATA', '"https://api.oratakashi.com/covid19/"'
         }
         debug {
             resValue("string", "runMode", "development")
             buildConfigField 'String', 'BASE_URL', '"https://covid19.mathdro.id/"'
+            buildConfigField 'String', 'BASE_URL_BNPB', '"https://services5.arcgis.com/VS6HdKS0VfIhv8Ct/arcgis/rest/services/COVID19_Indonesia_per_Provinsi/FeatureServer/0/"'
+            buildConfigField 'String', 'BASE_URL_ORATA', '"https://api.oratakashi.com/covid19/"'
         }
     }
     compileOptions {

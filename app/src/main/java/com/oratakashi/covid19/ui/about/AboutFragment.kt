@@ -32,7 +32,7 @@ class AboutFragment(val parent : MainInterfaces) : Fragment() {
 
         parent.getLocation(-6.9201766, 107.6049431, 12f)
 
-        tvSource.text = BuildConfig.BASE_URL
+        tvSource.text = BuildConfig.BASE_URL+"\nhttp://covid19.bnpb.go.id/"
 
         tvSourceCode.text = "https://github.com/oratakashi/COVID19_Tracker"
         tvSourceCode.setOnClickListener {

@@ -126,4 +126,8 @@
     <string name="title_description_source_code">Of course, this application is open source and you may use, modify, and develop this application, you can download this source code at:</string>
     <string name="title_covid19">COVID19</string>
     <string name="title_tracker">Tracker</string>
+    <string name="title_data_indonesia">Data Indonesia</string>
+    <string name="title_description_maintence">Maaf sepertinya salah satu dari server provider data kami sedang perbaikan, jadi kami tidak dapat menampilkan data untuk sekarang, silahkan coba lagi nanti!</string>
+    <string name="title_maintence">Under Maintence...</string>
+    <string name="title_check_status">Cek Status</string>
 </resources>

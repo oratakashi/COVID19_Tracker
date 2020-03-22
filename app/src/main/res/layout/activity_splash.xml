@@ -30,4 +30,14 @@
         android:layout_marginEnd="@dimen/margin_75"
         android:layout_marginTop="-15dp"/>
 
+    <TextView
+        android:id="@+id/tvVersion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Version : 0.0"
+        android:textColor="@color/white"
+        android:fontFamily="@font/regular"
+        android:textAlignment="center"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/margin_30"/>
 </RelativeLayout>

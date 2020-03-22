@@ -46,6 +46,17 @@
         android:layout_marginStart="@dimen/margin_10"
         android:layout_marginEnd="@dimen/margin_10"
         android:fontFamily="@font/regular"/>
+    <TextView
+        android:id="@+id/tvUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/foo"
+        android:textSize="@dimen/font_12"
+        android:textColor="@color/grey"
+        android:visibility="gone"
+        android:layout_marginStart="@dimen/margin_10"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:fontFamily="@font/regular"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

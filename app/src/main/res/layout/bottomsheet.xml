@@ -89,6 +89,16 @@
                     android:layout_marginStart="@dimen/margin_10"
                     android:textColor="@color/white"/>
                 <TextView
+                    android:id="@+id/btnProvince"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_round_white"
+                    android:text="@string/title_data_indonesia"
+                    android:fontFamily="@font/regular"
+                    android:textSize="@dimen/font_14"
+                    android:layout_marginStart="@dimen/margin_10"
+                    android:textColor="@color/white"/>
+                <TextView
                     android:id="@+id/btnAbout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -20,11 +20,13 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.oratakashi.covid19.R
 import com.oratakashi.covid19.data.model.confirm.DataConfirm
 import com.oratakashi.covid19.data.model.death.DataDeath
+import com.oratakashi.covid19.data.model.province.DataProvince
 import com.oratakashi.covid19.data.model.recovered.DataRecovered
 import com.oratakashi.covid19.data.model.statistik.ResponseStatistik
 import com.oratakashi.covid19.ui.about.AboutFragment
 import com.oratakashi.covid19.ui.confirm.ConfirmFragment
 import com.oratakashi.covid19.ui.death.DeathFragment
+import com.oratakashi.covid19.ui.province.ProvinceFragment
 import com.oratakashi.covid19.ui.recovered.RecoveredFragment
 import com.oratakashi.covid19.ui.statistik.StatistikFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -82,6 +84,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, MainInterfaces {
             }
             "death" -> {
                 tvTitle.text = resources.getString(R.string.title_data_death)
+            }
+            "province" -> {
+                tvTitle.text = resources.getString(R.string.title_data_indonesia)
             }
             "about" -> {
                 tvTitle.text = resources.getString(R.string.title_about)
@@ -190,10 +195,30 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, MainInterfaces {
         }
     }
 
+    override fun resultProvince(data: List<DataProvince>) {
+        bsHome.state = BottomSheetBehavior.STATE_COLLAPSED
+        mMap.clear()
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(-0.7893, 113.9213), 4f))
+        data.forEach {
+            if(it.attributes.provinsi != null && it.attributes.provinsi != "Indonesia"){
+                Log.e("lat", "Lat : ${it.geometry.lat.toDouble()}")
+                Log.e("long", "long : ${it.geometry.lang.toDouble()}")
+                mMap.addMarker(MarkerOptions().position(
+                    LatLng(
+                        it.geometry.lang.toDouble(),
+                        it.geometry.lat.toDouble()
+                    )
+                ).title(
+                    "${it.attributes.provinsi}"
+                )).snippet = "Deaths : ${it.attributes.death} Orang"
+            }
+        }
+    }
+
     override fun getLocation(lat: Double, lng: Double, zoom : Float) {
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(lat, lng), zoom))
         bsHome.state = BottomSheetBehavior.STATE_COLLAPSED
-        if(zoom != 5f){
+        if(zoom != 5f && zoom == 12f){
             mMap.clear()
             mMap.addMarker(MarkerOptions().position(
                 LatLng(
@@ -218,6 +243,10 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, MainInterfaces {
 
     @OnClick(R.id.btnDeaths) fun onDeaths(){
         openFragment(DeathFragment(this), "death")
+    }
+
+    @OnClick(R.id.btnProvince) fun onProvince(){
+        openFragment(ProvinceFragment(this), "province")
     }
 
     @OnClick(R.id.btnAbout) fun onAbout(){
