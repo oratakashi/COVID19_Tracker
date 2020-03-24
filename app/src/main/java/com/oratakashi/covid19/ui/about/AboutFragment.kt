@@ -41,6 +41,6 @@ class AboutFragment(val parent : MainInterfaces) : Fragment() {
             startActivity(i)
         }
 
-        ImageHelper.getPicasso(ivPhoto, "https://instagram.fjog3-1.fna.fbcdn.net/v/t51.2885-15/sh0.08/e35/p640x640/80829033_3098004946894585_4708885468781518897_n.jpg?_nc_ht=instagram.fjog3-1.fna.fbcdn.net&_nc_cat=1&_nc_ohc=k1AGqJvfCFEAX_2Wir9&oh=152ee04341172e2a6cd1dec60b8e77d0&oe=5EA13381")
+        ImageHelper.getPicasso(ivPhoto, "https://scontent-sin6-1.cdninstagram.com/v/t51.2885-15/sh0.08/e35/p640x640/81908314_202492847582455_7307641254095920312_n.jpg?_nc_ht=scontent-sin6-1.cdninstagram.com&_nc_cat=107&_nc_ohc=CmUqCJQQIeUAX8rCxni&oh=797bae1cf632209ddabb0f0dcabbd4cd&oe=5EA2CE47")
     }
 }

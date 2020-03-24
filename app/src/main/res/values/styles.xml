@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
     </style>
 
     <style name="coolEditText" parent="Base.Widget.AppCompat.EditText">
@@ -24,10 +25,10 @@
 
     <style name="coolEditTextFlat" parent="Base.Widget.AppCompat.EditText">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_height">40dp</item>
         <item name="android:padding">5dp</item>
-        <item name="android:background">@color/white</item>
-        <item name="android:textColor">@color/font</item>
+        <item name="android:background">@color/dark_grey</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textColorHint">@color/hint</item>
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/regular</item>

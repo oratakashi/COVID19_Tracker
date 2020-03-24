@@ -1,16 +1,18 @@
 package com.oratakashi.covid19.ui.recovered
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.oratakashi.covid19.R
+import com.oratakashi.covid19.data.model.localstorage.DataGlobal
 import com.oratakashi.covid19.data.model.recovered.DataRecovered
 import com.oratakashi.covid19.ui.main.MainInterfaces
 import kotlinx.android.synthetic.main.adapter_list.view.*
 
 class RecoveredAdapter(
-    val data : List<DataRecovered>, val parent : MainInterfaces
+    val data : List<DataGlobal>, val parent : MainInterfaces, val context: Context
 ) : RecyclerView.Adapter<RecoveredAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -32,9 +34,9 @@ class RecoveredAdapter(
                 "${data[position].countryRegion}"
             }
         }
-        holder.itemView.tvConfirmed.text = "Confirmed : ${data[position].confirmed} Orang"
-        holder.itemView.tvRecovered.text = "Recovered : ${data[position].recovered} Orang"
-        holder.itemView.tvDeath.text = "Deaths : ${data[position].deaths} Orang"
+        holder.itemView.tvConfirmed.text = "${context.resources.getString(R.string.title_confirm)} : ${data[position].confirmed} Orang"
+        holder.itemView.tvRecovered.text = "${context.resources.getString(R.string.title_recovered)} : ${data[position].recovered} Orang"
+        holder.itemView.tvDeath.text = "${context.resources.getString(R.string.title_deaths)} : ${data[position].deaths} Orang"
         holder.itemView.llAdapter.setOnClickListener {
             parent.getLocation(data[position].lat!!.toDouble(), data[position].long!!.toDouble())
         }

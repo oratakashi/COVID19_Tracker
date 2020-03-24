@@ -16,14 +16,17 @@ import butterknife.OnClick
 import com.google.android.material.snackbar.Snackbar
 
 import com.oratakashi.covid19.R
-import com.oratakashi.covid19.data.model.province.DataProvince
+import com.oratakashi.covid19.data.db.Database
+import com.oratakashi.covid19.data.model.localstorage.DataProvince
 import com.oratakashi.covid19.ui.main.MainInterfaces
+import com.oratakashi.covid19.ui.sortirdialog.SortDialogInterface
+import com.oratakashi.covid19.ui.sortirdialog.SortLocalFragment
 import kotlinx.android.synthetic.main.fragment_province.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class ProvinceFragment(val parent : MainInterfaces) : Fragment() {
+class ProvinceFragment(val parent : MainInterfaces) : Fragment(), SortDialogInterface {
 
     lateinit var viewModel: ProvinceViewModel
     lateinit var adapter: ProvinceAdapter
@@ -43,10 +46,12 @@ class ProvinceFragment(val parent : MainInterfaces) : Fragment() {
         ButterKnife.bind(this, view)
 
         viewModel = ViewModelProviders.of(this).get(ProvinceViewModel::class.java)
-        adapter = ProvinceAdapter(data, parent)
+        adapter = ProvinceAdapter(data, parent, context!!)
 
         rvProvince.adapter = adapter
         rvProvince.layoutManager = LinearLayoutManager(context)
+
+        viewModel.setupInstantSearch(etSearch)
 
         setupViewModel()
     }
@@ -70,12 +75,12 @@ class ProvinceFragment(val parent : MainInterfaces) : Fragment() {
                 when(it){
                     true -> {
                         llLoading.visibility = View.VISIBLE
-                        rvProvince.visibility = View.GONE
+                        llContent.visibility = View.GONE
                         llMaintence.visibility = View.GONE
                     }
                     false -> {
                         llLoading.visibility = View.GONE
-                        rvProvince.visibility = View.VISIBLE
+                        llContent.visibility = View.VISIBLE
                         llMaintence.visibility = View.GONE
                     }
                 }
@@ -85,29 +90,61 @@ class ProvinceFragment(val parent : MainInterfaces) : Fragment() {
             response?.let{
                 when(it.data.isEmpty()){
                     true -> {
-                        rvProvince.visibility = View.GONE
+                        rvProvince.visibility = View.VISIBLE
                         llMaintence.visibility = View.VISIBLE
                         tvServer.text = "Sumber data : covid19.bnpb.go.id"
                     }
                     false -> {
-                        data.clear()
-                        it.data.forEach {
-                            if(it.attributes.provinsi != null && it.attributes.provinsi != "Indonesia"){
-                                data.add(it)
-                            }
-                        }
-                        adapter.notifyDataSetChanged()
                         parent.resultProvince(it.data)
                     }
                 }
             }
         })
+        viewModel.cacheProvince.observe(this, Observer { cache ->
+            cache?.let{
+                data.clear()
+                it.forEach {
+                    data.add(it)
+                }
+                adapter.notifyDataSetChanged()
+            }
+        })
         viewModel.getData()
+    }
+
+    override fun onSort(option: String) {
+        when(option){
+            "asc_confirm" -> {
+                viewModel.getCache("asc", Database.confirmed, etSearch.text.toString())
+            }
+            "desc_confirm" -> {
+                viewModel.getCache("desc", Database.confirmed, etSearch.text.toString())
+            }
+            "asc_recovered" -> {
+                viewModel.getCache("asc", Database.recovered, etSearch.text.toString())
+            }
+            "desc_recovered" -> {
+                viewModel.getCache("desc", Database.recovered, etSearch.text.toString())
+            }
+            "asc_death" -> {
+                viewModel.getCache("asc", Database.deaths, etSearch.text.toString())
+            }
+            "desc_death" -> {
+                viewModel.getCache("desc", Database.deaths, etSearch.text.toString())
+            }
+            "abjad" -> {
+                viewModel.getCache("asc", Database.provinceState, etSearch.text.toString())
+            }
+        }
     }
 
     @OnClick(R.id.btnCheck) fun onCheck(){
         val i = Intent(Intent.ACTION_VIEW)
         i.data = Uri.parse("https://bnpb-inacovid19.hub.arcgis.com/datasets/covid19-indonesia-per-provinsi/data?geometry=89.223%2C-9.881%2C148.593%2C5.442")
         startActivity(i)
+    }
+
+    @OnClick(R.id.ivShort) fun onSort(){
+        SortLocalFragment.newInstance(this).show(childFragmentManager, "dialog")
     }
 }

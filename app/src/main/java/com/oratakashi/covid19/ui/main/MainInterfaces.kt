@@ -13,4 +13,5 @@ interface MainInterfaces {
     fun resultDeath(data : List<DataDeath>)
     fun resultProvince(data : List<DataProvince>)
     fun getLocation(lat : Double, lng : Double, zoom : Float = 5f)
+    fun onFocus(focus: Boolean)
 }

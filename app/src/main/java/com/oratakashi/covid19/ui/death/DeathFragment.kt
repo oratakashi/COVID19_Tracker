@@ -9,22 +9,28 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import butterknife.ButterKnife
+import butterknife.OnClick
 import com.google.android.material.snackbar.Snackbar
 
 import com.oratakashi.covid19.R
+import com.oratakashi.covid19.data.db.Database
 import com.oratakashi.covid19.data.model.death.DataDeath
+import com.oratakashi.covid19.data.model.localstorage.DataGlobal
 import com.oratakashi.covid19.ui.main.MainInterfaces
+import com.oratakashi.covid19.ui.sortirdialog.SortDialogFragment
+import com.oratakashi.covid19.ui.sortirdialog.SortDialogInterface
 import kotlinx.android.synthetic.main.fragment_death.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class DeathFragment(val parent : MainInterfaces) : Fragment() {
+class DeathFragment(val parent : MainInterfaces) : Fragment(), SortDialogInterface {
 
     lateinit var viewModel: DeathViewModel
     lateinit var adapter: DeathAdapter
 
-    val data : MutableList<DataDeath> = ArrayList()
+    val data : MutableList<DataGlobal> = ArrayList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,11 +42,15 @@ class DeathFragment(val parent : MainInterfaces) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        ButterKnife.bind(this, view)
+
         viewModel = ViewModelProviders.of(this).get(DeathViewModel::class.java)
-        adapter = DeathAdapter(data, parent)
+        adapter = DeathAdapter(data, parent, context!!)
 
         rvDeath.adapter = adapter
         rvDeath.layoutManager = LinearLayoutManager(context)
+
+        viewModel.setupInstantSearch(etSearch)
 
         setupViewModel()
     }
@@ -64,26 +74,48 @@ class DeathFragment(val parent : MainInterfaces) : Fragment() {
                 when(it){
                     true -> {
                         llLoading.visibility = View.VISIBLE
-                        rvDeath.visibility = View.GONE
+                        llContent.visibility = View.GONE
                     }
                     false -> {
                         llLoading.visibility = View.GONE
-                        rvDeath.visibility = View.VISIBLE
+                        llContent.visibility = View.VISIBLE
                     }
                 }
             }
         })
         viewModel.responseDeath.observe(this, Observer { response ->
             response?.let{
+                parent.resultDeath(it)
+            }
+        })
+        viewModel.cacheDeath.observe(this, Observer { cache ->
+            cache?.let{
                 data.clear()
                 it.forEach {
                     data.add(it)
                 }
-                parent.resultDeath(it)
                 adapter.notifyDataSetChanged()
             }
         })
 
         viewModel.getDeath()
+    }
+
+    override fun onSort(option: String) {
+        when(option){
+            "asc" -> {
+                viewModel.getCache(option, Database.deaths, etSearch.text.toString())
+            }
+            "desc" -> {
+                viewModel.getCache(option, Database.deaths, etSearch.text.toString())
+            }
+            "abjad" -> {
+                viewModel.getCache("asc", Database.countryRegion, etSearch.text.toString())
+            }
+        }
+    }
+
+    @OnClick(R.id.ivShort) fun onSort(){
+        SortDialogFragment.newInstance(this).show(childFragmentManager, "dialog")
     }
 }

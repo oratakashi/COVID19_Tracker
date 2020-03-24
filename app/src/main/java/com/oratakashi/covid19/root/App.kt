@@ -1,6 +1,8 @@
 package com.oratakashi.covid19.root
 
 import android.app.Application
+import com.oratakashi.covid19.data.db.Database
+import com.oratakashi.covid19.data.db.QueryBuilder
 import com.oratakashi.covid19.data.network.ApiBNPB
 import com.oratakashi.covid19.data.network.ApiOrata
 import com.oratakashi.covid19.data.network.ApiService
@@ -14,7 +16,9 @@ class App : Application() {
         var service : ApiService?= null
         var bnpb : ApiBNPB ?= null
         var orata : ApiOrata ?= null
+        var builder : QueryBuilder ?= null
         var disposable : CompositeDisposable?= null
+        var db : Database ?= null
     }
     override fun onCreate() {
         super.onCreate()
@@ -22,5 +26,8 @@ class App : Application() {
         bnpb = ApiBNPB()
         orata = ApiOrata()
         disposable = CompositeDisposable()
+        db = Database(this)
+
+        builder = object : QueryBuilder() {}
     }
 }

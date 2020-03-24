@@ -201,8 +201,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, MainInterfaces {
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(-0.7893, 113.9213), 4f))
         data.forEach {
             if(it.attributes.provinsi != null && it.attributes.provinsi != "Indonesia"){
-                Log.e("lat", "Lat : ${it.geometry.lat.toDouble()}")
-                Log.e("long", "long : ${it.geometry.lang.toDouble()}")
                 mMap.addMarker(MarkerOptions().position(
                     LatLng(
                         it.geometry.lang.toDouble(),
@@ -216,6 +214,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, MainInterfaces {
     }
 
     override fun getLocation(lat: Double, lng: Double, zoom : Float) {
+        Log.e("Location", "lat : $lat, long : $lng")
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(lat, lng), zoom))
         bsHome.state = BottomSheetBehavior.STATE_COLLAPSED
         if(zoom != 5f && zoom == 12f){
@@ -226,6 +225,17 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, MainInterfaces {
                     lng
                 )
             ).title("Bandung, Indonesia"))
+        }
+    }
+
+    override fun onFocus(focus: Boolean) {
+        when(focus){
+            true -> {
+                bsHome.state = BottomSheetBehavior.STATE_EXPANDED
+            }
+            false -> {
+                bsHome.state = BottomSheetBehavior.STATE_COLLAPSED
+            }
         }
     }
 

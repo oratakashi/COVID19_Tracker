@@ -26,17 +26,18 @@ class SplashActivity : AppCompatActivity() {
 
         viewModel = ViewModelProviders.of(this).get(SplashViewModel::class.java)
 
-        setupViewModel()
-
         NetworkUtils.checkConnectivity(this, object : NetworkUtils.NetworkUtilCallback {
             override fun onSuccess() {
                 viewModel.cekUpdate()
             }
 
             override fun onCancel() {
-
+                startActivity(Intent(applicationContext, MainActivity::class.java))
+                finish()
             }
         })
+
+        setupViewModel()
     }
 
     fun setupViewModel(){
