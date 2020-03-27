@@ -2,6 +2,7 @@ package com.oratakashi.covid19.data.network
 
 import com.oratakashi.covid19.BuildConfig
 import com.oratakashi.covid19.data.model.province.ResponseProvince
+import com.oratakashi.covid19.data.model.timeline.ResponseTimeline
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -32,6 +33,10 @@ class ApiBNPB {
     }
 
     fun getData() : Single<ResponseProvince> {
-        return api.getDataBNPB()
+        return api.getDataBNPB("COVID19_Indonesia_per_Provinsi")
+    }
+
+    fun getTimeline() : Single<ResponseTimeline>{
+        return api.getDataTimeline("Statistik_Perkembangan_COVID19_Indonesia")
     }
 }

@@ -11,8 +11,8 @@ android {
         applicationId "com.oratakashi.covid19"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 4
-        versionName "1.3"
+        versionCode 5
+        versionName "1.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -22,13 +22,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField 'String', 'BASE_URL', '"https://covid19.mathdro.id/"'
-            buildConfigField 'String', 'BASE_URL_BNPB', '"https://services5.arcgis.com/VS6HdKS0VfIhv8Ct/arcgis/rest/services/COVID19_Indonesia_per_Provinsi/FeatureServer/0/"'
+            buildConfigField 'String', 'BASE_URL_BNPB', '"https://services5.arcgis.com/VS6HdKS0VfIhv8Ct/arcgis/rest/services/"'
             buildConfigField 'String', 'BASE_URL_ORATA', '"https://api.oratakashi.com/covid19/"'
         }
         debug {
             resValue("string", "runMode", "development")
             buildConfigField 'String', 'BASE_URL', '"https://covid19.mathdro.id/"'
-            buildConfigField 'String', 'BASE_URL_BNPB', '"https://services5.arcgis.com/VS6HdKS0VfIhv8Ct/arcgis/rest/services/COVID19_Indonesia_per_Provinsi/FeatureServer/0/"'
+            buildConfigField 'String', 'BASE_URL_BNPB', '"https://services5.arcgis.com/VS6HdKS0VfIhv8Ct/arcgis/rest/services/"'
             buildConfigField 'String', 'BASE_URL_ORATA', '"https://api.oratakashi.com/covid19/"'
         }
     }
@@ -98,6 +98,8 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterknifeVersion"
     kapt "com.jakewharton:butterknife-compiler:$butterknifeVersion"
+
+    implementation 'com.github.vipulasri:timelineview:1.1.4'
 
     implementation 'com.wang.avi:library:2.1.3'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'

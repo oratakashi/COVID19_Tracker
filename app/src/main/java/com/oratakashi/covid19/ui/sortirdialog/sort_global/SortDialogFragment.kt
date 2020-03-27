@@ -1,4 +1,4 @@
-package com.oratakashi.covid19.ui.sortirdialog
+package com.oratakashi.covid19.ui.sortirdialog.sort_global
 
 import android.os.Bundle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.oratakashi.covid19.R
+import com.oratakashi.covid19.ui.sortirdialog.SortDialogInterface
 
 class SortDialogFragment : BottomSheetDialogFragment() {
 
@@ -40,7 +41,8 @@ class SortDialogFragment : BottomSheetDialogFragment() {
     companion object {
         lateinit var interfaces: SortDialogInterface
         fun newInstance(parent : SortDialogInterface): SortDialogFragment =
-            SortDialogFragment().apply {
+            SortDialogFragment()
+                .apply {
                 interfaces = parent
             }
 

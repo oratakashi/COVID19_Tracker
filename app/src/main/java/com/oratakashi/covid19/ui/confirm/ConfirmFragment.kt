@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,10 +16,9 @@ import com.google.android.material.snackbar.Snackbar
 
 import com.oratakashi.covid19.R
 import com.oratakashi.covid19.data.db.Database
-import com.oratakashi.covid19.data.model.confirm.DataConfirm
 import com.oratakashi.covid19.data.model.localstorage.DataGlobal
 import com.oratakashi.covid19.ui.main.MainInterfaces
-import com.oratakashi.covid19.ui.sortirdialog.SortDialogFragment
+import com.oratakashi.covid19.ui.sortirdialog.sort_global.SortDialogFragment
 import com.oratakashi.covid19.ui.sortirdialog.SortDialogInterface
 import kotlinx.android.synthetic.main.fragment_confirm.*
 

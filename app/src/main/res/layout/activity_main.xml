@@ -13,6 +13,7 @@
         android:layout_gravity="end"
         android:layout_marginEnd="@dimen/margin_15"
         android:layout_marginTop="@dimen/margin_10"
+        android:visibility="gone"
         android:background="@drawable/bg_round_white">
         <Switch
             android:id="@+id/swLive"

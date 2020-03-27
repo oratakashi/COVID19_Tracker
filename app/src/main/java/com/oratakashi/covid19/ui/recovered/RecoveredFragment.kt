@@ -17,9 +17,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.oratakashi.covid19.R
 import com.oratakashi.covid19.data.db.Database
 import com.oratakashi.covid19.data.model.localstorage.DataGlobal
-import com.oratakashi.covid19.data.model.recovered.DataRecovered
 import com.oratakashi.covid19.ui.main.MainInterfaces
-import com.oratakashi.covid19.ui.sortirdialog.SortDialogFragment
+import com.oratakashi.covid19.ui.sortirdialog.sort_global.SortDialogFragment
 import com.oratakashi.covid19.ui.sortirdialog.SortDialogInterface
 import kotlinx.android.synthetic.main.fragment_recovered.*
 

@@ -2,11 +2,16 @@ package com.oratakashi.covid19.data.db
 
 import android.content.ContentValues
 import android.database.Cursor
+import android.util.Log
 import com.oratakashi.covid19.data.model.confirm.DataConfirm
 import com.oratakashi.covid19.data.model.death.DataDeath
 import com.oratakashi.covid19.data.model.province.DataProvince
 import com.oratakashi.covid19.data.model.recovered.DataRecovered
+import com.oratakashi.covid19.data.model.timeline.DataTimeline
 import com.oratakashi.covid19.root.App
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Query Builder Powered By Oratakashi
@@ -212,6 +217,21 @@ abstract class QueryBuilder {
         values.put(Database.deaths, data.attributes.death)
 
         App.db!!.insert(values, Database.TABLE_PROVINCE)
+    }
+
+    fun insert(data : DataTimeline){
+        val values = ContentValues()
+        Log.e("date", "Date Enscrypted : ${data.attributes.tanggal}")
+        var date =
+            SimpleDateFormat("dd-MMMM-yyyy HH:mm:ss").format(Date(data.attributes.tanggal!!))
+        val array = date.split(" ")
+        values.put(Database.date, array[0])
+        values.put(Database.case, data.attributes.case)
+        values.put(Database.confirmed, data.attributes.confirm)
+        values.put(Database.recovered, data.attributes.recovered)
+        values.put(Database.deaths, data.attributes.death)
+
+        App.db!!.insert(values, Database.TABLE_TIMELINE)
     }
 
     fun delete(table : String){

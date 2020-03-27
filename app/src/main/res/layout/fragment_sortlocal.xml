@@ -12,7 +12,7 @@
     android:paddingStart="@dimen/padding_10"
     android:paddingEnd="@dimen/padding_10"
     style="@style/AppBottomSheetDialogTheme"
-    tools:context=".ui.sortirdialog.SortLocalFragment">
+    tools:context=".ui.sortirdialog.sort_indonesia.SortLocalFragment">
     <View
         android:layout_width="@dimen/size_50"
         android:layout_height="@dimen/size_3"

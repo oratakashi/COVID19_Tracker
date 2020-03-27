@@ -20,7 +20,8 @@ import com.oratakashi.covid19.data.db.Database
 import com.oratakashi.covid19.data.model.localstorage.DataProvince
 import com.oratakashi.covid19.ui.main.MainInterfaces
 import com.oratakashi.covid19.ui.sortirdialog.SortDialogInterface
-import com.oratakashi.covid19.ui.sortirdialog.SortLocalFragment
+import com.oratakashi.covid19.ui.sortirdialog.sort_indonesia.SortLocalFragment
+import com.oratakashi.covid19.ui.timeline.TimelineActivity
 import kotlinx.android.synthetic.main.fragment_province.*
 
 /**
@@ -146,5 +147,9 @@ class ProvinceFragment(val parent : MainInterfaces) : Fragment(), SortDialogInte
 
     @OnClick(R.id.ivShort) fun onSort(){
         SortLocalFragment.newInstance(this).show(childFragmentManager, "dialog")
+    }
+
+    @OnClick(R.id.ivTimeline) fun onTimeline(){
+        startActivity(Intent(context, TimelineActivity::class.java))
     }
 }

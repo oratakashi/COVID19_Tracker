@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.oratakashi.covid19.BuildConfig
 import com.oratakashi.covid19.R
 import com.oratakashi.covid19.ui.main.MainActivity
+import com.oratakashi.covid19.ui.timeline.TimelineActivity
 import com.oratakashi.covid19.utils.NetworkUtils
 import kotlinx.android.synthetic.main.activity_splash.*
 

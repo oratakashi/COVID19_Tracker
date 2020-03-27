@@ -10,7 +10,7 @@
     tools:context=".ui.province.ProvinceFragment">
     <LinearLayout
         android:id="@+id/llLoading"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -85,7 +85,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -98,7 +98,7 @@
                 android:maxLines="1"
                 android:inputType="text"
                 android:imeOptions="actionDone"
-                android:hint="@string/title_country_search"/>
+                android:hint="@string/title_province_search"/>
             <ImageView
                 android:id="@+id/ivShort"
                 android:layout_width="@dimen/size_32"
@@ -106,6 +106,14 @@
                 android:src="@drawable/ic_short"
                 android:layout_marginEnd="@dimen/margin_10"
                 android:layout_marginStart="@dimen/margin_10"
+                android:layout_marginTop="@dimen/margin_13"
+                android:layout_toStartOf="@+id/ivTimeline"/>
+            <ImageView
+                android:id="@+id/ivTimeline"
+                android:layout_width="@dimen/size_32"
+                android:layout_height="@dimen/size_32"
+                android:src="@drawable/ic_timeline"
+                android:layout_marginEnd="@dimen/margin_10"
                 android:layout_marginTop="@dimen/margin_13"
                 android:layout_alignParentEnd="true"/>
         </RelativeLayout>

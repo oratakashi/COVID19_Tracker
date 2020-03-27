@@ -9,7 +9,6 @@ import com.oratakashi.covid19.BuildConfig
 
 class Database(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_VERSION) {
     companion object{
-        const val TAG = "DatabaseHelper"
         const val DB_NAME = "db."+ BuildConfig.APPLICATION_ID
         const val DB_VERSION = BuildConfig.VERSION_CODE
 
@@ -17,6 +16,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
         const val TABLE_RECOVERED = "recovered"
         const val TABLE_DEATH = "death"
         const val TABLE_PROVINCE = "province"
+        const val TABLE_TIMELINE = "timeline"
 
         /**
          * Attribute Table
@@ -29,6 +29,8 @@ class Database(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
         const val confirmed : String = "confirmed"
         const val recovered : String = "recovered"
         const val deaths : String = "deaths"
+        const val case : String = "cases"
+        const val date : String = "date"
     }
 
     private val createTableConfirm = "CREATE TABLE $TABLE_CONFIRM (" +
@@ -71,6 +73,15 @@ class Database(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
             "$deaths INTEGER" +
             ")"
 
+    private val createTableTimeline = "CREATE TABLE $TABLE_TIMELINE (" +
+            "$id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "$date DATE," +
+            "$case INTEGER," +
+            "$confirmed INTEGER," +
+            "$recovered INTEGER," +
+            "$deaths INTEGER" +
+            ")"
+
     var context: Context? = null
     var db: SQLiteDatabase? = null
 
@@ -96,6 +107,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
         db.execSQL(createTableRecovered)
         db.execSQL(createTableDeath)
         db.execSQL(createTableProvince)
+        db.execSQL(createTableTimeline)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -104,9 +116,10 @@ class Database(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
         db.execSQL("DROP TABLE IF EXISTS $TABLE_DEATH")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_PROVINCE")
 
-        db!!.execSQL(createTableConfirm)
+        db.execSQL(createTableConfirm)
         db.execSQL(createTableRecovered)
         db.execSQL(createTableDeath)
         db.execSQL(createTableProvince)
+        db.execSQL(createTableTimeline)
     }
 }

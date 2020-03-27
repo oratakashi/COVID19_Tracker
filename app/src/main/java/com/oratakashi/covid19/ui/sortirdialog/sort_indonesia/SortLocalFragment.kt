@@ -1,18 +1,14 @@
-package com.oratakashi.covid19.ui.sortirdialog
+package com.oratakashi.covid19.ui.sortirdialog.sort_indonesia
 
 import android.os.Bundle
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.oratakashi.covid19.R
-import kotlinx.android.synthetic.main.fragment_sortlocal.*
-import kotlinx.android.synthetic.main.fragment_sort_local_list_dialog_item.view.*
+import com.oratakashi.covid19.ui.sortirdialog.SortDialogInterface
 
 
 class SortLocalFragment : BottomSheetDialogFragment() {
