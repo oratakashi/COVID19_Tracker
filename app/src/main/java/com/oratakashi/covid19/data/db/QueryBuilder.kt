@@ -221,7 +221,6 @@ abstract class QueryBuilder {
 
     fun insert(data : DataTimeline){
         val values = ContentValues()
-        Log.e("date", "Date Enscrypted : ${data.attributes.tanggal}")
         var date =
             SimpleDateFormat("dd-MMMM-yyyy HH:mm:ss").format(Date(data.attributes.tanggal!!))
         val array = date.split(" ")

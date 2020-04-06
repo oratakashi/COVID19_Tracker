@@ -2,6 +2,7 @@ package com.oratakashi.covid19.ui.recovered
 
 import android.database.Cursor
 import android.widget.EditText
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.jakewharton.rxbinding3.widget.TextViewTextChangeEvent
@@ -10,46 +11,43 @@ import com.oratakashi.covid19.BuildConfig
 import com.oratakashi.covid19.data.db.Database
 import com.oratakashi.covid19.data.model.localstorage.DataGlobal
 import com.oratakashi.covid19.data.model.recovered.DataRecovered
+import com.oratakashi.covid19.data.network.ApiEndpoint
 import com.oratakashi.covid19.root.App
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
-class RecoveredViewModel : ViewModel() {
-    val progressRecovered = MutableLiveData<Boolean>()
-    val responseRecovered = MutableLiveData<List<DataRecovered>>()
-    val errorRecovered = MutableLiveData<Boolean>()
+class RecoveredViewModel @Inject constructor(
+    val endpoint: ApiEndpoint
+) : ViewModel(), RecoveredView {
 
-    val cacheRecovered = MutableLiveData<List<DataGlobal>>()
+    val cacheRecovered by lazy {
+        MutableLiveData<List<DataGlobal>>()
+    }
 
-    val showMessage = MutableLiveData<String>()
+    val observer by lazy {
+        MutableLiveData<RecoveredState>()
+    }
 
-    fun getRecovered(){
-        progressRecovered.value = true
-        App.disposable!!.add(
-            App.service!!.getRecovered()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<List<DataRecovered>>() {
-                    override fun onSuccess(t: List<DataRecovered>) {
-                        progressRecovered.value = false
-                        errorRecovered.value = false
-                        responseRecovered.value = t
+    override val state: LiveData<RecoveredState>
+        get() = observer
 
-                        cacheData(t)
-                        getCache()
-                    }
+    override fun getData() {
+        endpoint.getRecovered()
+            .map<RecoveredState>(RecoveredState::Result)
+            .onErrorReturn(RecoveredState::Error)
+            .toFlowable()
+            .startWith(RecoveredState.Loading)
+            .subscribe(observer::postValue)
+            .let { App.disposable!!::add }
+    }
 
-                    override fun onError(e: Throwable) {
-                        progressRecovered.value = false
-                        errorRecovered.value = true
-                        getCache()
-                        if(BuildConfig.DEBUG) showMessage.value = e.message
-                    }
-                })
-        )
+    override fun onCleared() {
+        super.onCleared()
+        App.disposable!!.clear()
     }
 
     fun cacheData(data : List<DataRecovered>){
@@ -94,8 +92,8 @@ class RecoveredViewModel : ViewModel() {
                 DataGlobal(
                     db.getString(db.getColumnIndex(Database.provinceState)),
                     db.getString(db.getColumnIndex(Database.countryRegion)),
-                    db.getString(db.getColumnIndex(Database.lat)).toFloat(),
-                    db.getString(db.getColumnIndex(Database.long)).toFloat(),
+                    db.getFloat(db.getColumnIndex(Database.lat)),
+                    db.getFloat(db.getColumnIndex(Database.long)),
                     db.getInt(db.getColumnIndex(Database.confirmed)),
                     db.getInt(db.getColumnIndex(Database.recovered)),
                     db.getInt(db.getColumnIndex(Database.deaths))

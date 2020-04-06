@@ -21,5 +21,5 @@
     string in this file.
     -->
 <!--    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">{{ YOUR API KEY }}</string>-->
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">{{ YOUR API KEY }}</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBCIPTT9pJtIAx2FII3lezmV_aArSWrArE</string>
 </resources>

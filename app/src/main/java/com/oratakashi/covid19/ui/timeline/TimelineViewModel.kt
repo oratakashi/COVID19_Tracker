@@ -1,45 +1,48 @@
 package com.oratakashi.covid19.ui.timeline
 
 import android.database.Cursor
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.oratakashi.covid19.BuildConfig
 import com.oratakashi.covid19.data.db.Database
 import com.oratakashi.covid19.data.model.localstorage.DataTimeline
 import com.oratakashi.covid19.data.model.timeline.ResponseTimeline
+import com.oratakashi.covid19.data.network.ApiEndpoint
 import com.oratakashi.covid19.root.App
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class TimelineViewModel : ViewModel() {
-    val progressTimeLine = MutableLiveData<Boolean>()
-    val responseTimeLine = MutableLiveData<List<DataTimeline>>()
-    val errorTimeLine = MutableLiveData<Boolean>()
+class TimelineViewModel @Inject constructor(
+    val endpoint: ApiEndpoint
+) : ViewModel(), TimelineView {
 
-    val showMessage = MutableLiveData<String>()
+    val responseTimeLine by lazy {
+        MutableLiveData<List<DataTimeline>>()
+    }
 
-    fun getTimeLine(){
-        progressTimeLine.value = true
-        App.disposable!!.add(
-            App.bnpb!!.getTimeline()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(object : DisposableSingleObserver<ResponseTimeline>() {
-                    override fun onSuccess(t: ResponseTimeline) {
-                        progressTimeLine.value = false
-                        errorTimeLine.value = false
-                        cacheData(t)
-                        getCache()
-                    }
+    val observer by lazy {
+        MutableLiveData<TimelineState>()
+    }
 
-                    override fun onError(e: Throwable) {
-                        progressTimeLine.value = false
-                        errorTimeLine.value = true
-                        if(BuildConfig.DEBUG) showMessage.value = e.message
-                    }
-                })
-        )
+    override val state: LiveData<TimelineState>
+        get() = observer
+
+    override fun getData() {
+        endpoint.getDataTimeline("Statistik_Perkembangan_COVID19_Indonesia")
+            .map<TimelineState>(TimelineState::Result)
+            .onErrorReturn(TimelineState::Error)
+            .toFlowable()
+            .startWith(TimelineState.Loading)
+            .subscribe(observer::postValue)
+            .let { App.disposable!!::add }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        App.disposable!!.clear()
     }
 
     fun cacheData(response : ResponseTimeline){

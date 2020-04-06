@@ -1,37 +1,47 @@
 package com.oratakashi.covid19.ui.timeline
 
 import android.app.DatePickerDialog
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.google.android.material.snackbar.Snackbar
+import com.oratakashi.covid19.BuildConfig
 import com.oratakashi.covid19.R
 import com.oratakashi.covid19.data.db.Database
 import com.oratakashi.covid19.data.model.localstorage.DataTimeline
 import com.oratakashi.covid19.ui.sortirdialog.SortDialogInterface
 import com.oratakashi.covid19.ui.sortirdialog.sort_timeline.SortTimelineFragment
+import com.oratakashi.covid19.ui.timeline.TimelineState.Error
+import com.oratakashi.covid19.ui.timeline.TimelineState.Loading
+import com.oratakashi.covid19.ui.timeline.TimelineState.Result
 import com.oratakashi.covid19.utils.Converter
 import com.oratakashi.covid19.utils.Tmp
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_timeline.*
-import kotlinx.android.synthetic.main.fragment_statistik.*
 import java.util.*
+import javax.inject.Inject
 import kotlin.collections.ArrayList
 
-class TimelineActivity : AppCompatActivity(), SortDialogInterface {
+class TimelineActivity : DaggerAppCompatActivity(), SortDialogInterface {
 
-    lateinit var adapter: TimelineAdapter
-    lateinit var viewModel: TimelineViewModel
+    @Inject
+    lateinit var viewmodelFactory: ViewModelProvider.Factory
 
     val data : MutableList<DataTimeline> = ArrayList()
+
+    lateinit var adapter: TimelineAdapter
+
+    val viewModel : TimelineViewModel by lazy {
+        ViewModelProviders.of(this, viewmodelFactory).get(TimelineViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +54,6 @@ class TimelineActivity : AppCompatActivity(), SortDialogInterface {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         adapter = TimelineAdapter(data, this)
-        viewModel = ViewModelProviders.of(this).get(TimelineViewModel::class.java)
 
         rvTimeline.layoutManager = LinearLayoutManager(this)
         rvTimeline.adapter = adapter
@@ -52,7 +61,7 @@ class TimelineActivity : AppCompatActivity(), SortDialogInterface {
         srTimeline.setOnRefreshListener {
             Tmp.sort = "asc"
             etSearch.setText("")
-            viewModel.getTimeLine()
+            viewModel.getData()
         }
 
         etSearch.addTextChangedListener {
@@ -65,31 +74,30 @@ class TimelineActivity : AppCompatActivity(), SortDialogInterface {
     }
 
     fun setupViewModel(){
-        viewModel.showMessage.observe(this, Observer { message ->
-            message?.let{
-                Toast.makeText(applicationContext, it, Toast.LENGTH_SHORT).show()
-            }
-        })
-        viewModel.errorTimeLine.observe(this, Observer { error ->
-            error?.let{
-                if(it) Snackbar.make(srTimeline, "Gagal memuat data terbaru!", Snackbar.LENGTH_SHORT)
-                    .setAction("Coba lagi"){
-                        viewModel.getTimeLine()
-                    }.show()
-            }
-        })
-        viewModel.progressTimeLine.observe(this, Observer { progress ->
-            progress?.let{
+
+        viewModel.state.observe(this, Observer { state ->
+            state?.let{
                 when(it){
-                    true -> {
-                        srTimeline.isRefreshing = true
-                    }
-                    false -> {
+                    is Loading -> srTimeline.isRefreshing = true
+                    is Result -> {
                         srTimeline.isRefreshing = false
+                        viewModel.cacheData(it.data)
+                        viewModel.getCache()
+                    }
+                    is Error -> {
+                        srTimeline.isRefreshing = false
+                        viewModel.getCache()
+                        Snackbar.make(srTimeline, "Gagal memuat data terbaru!", Snackbar.LENGTH_SHORT)
+                            .setAction("Coba lagi"){
+                                viewModel.getData()
+                            }.show()
+                        if(BuildConfig.DEBUG) Toast.makeText(applicationContext, it.error.message,
+                            Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         })
+
         viewModel.responseTimeLine.observe(this, Observer { response ->
             response?.let{
                 if(it.isNotEmpty()){
@@ -106,7 +114,7 @@ class TimelineActivity : AppCompatActivity(), SortDialogInterface {
             }
         })
 
-        viewModel.getTimeLine()
+        viewModel.getData()
     }
 
     override fun onSort(option: String) {

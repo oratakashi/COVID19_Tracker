@@ -1,5 +1,6 @@
 package com.oratakashi.covid19.ui.province
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -9,30 +10,46 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.google.android.material.snackbar.Snackbar
+import com.oratakashi.covid19.BuildConfig
 
 import com.oratakashi.covid19.R
 import com.oratakashi.covid19.data.db.Database
 import com.oratakashi.covid19.data.model.localstorage.DataProvince
 import com.oratakashi.covid19.ui.main.MainInterfaces
+import com.oratakashi.covid19.ui.province.ProvinceState.Error
+import com.oratakashi.covid19.ui.province.ProvinceState.Loading
+import com.oratakashi.covid19.ui.province.ProvinceState.Result
 import com.oratakashi.covid19.ui.sortirdialog.SortDialogInterface
 import com.oratakashi.covid19.ui.sortirdialog.sort_indonesia.SortLocalFragment
 import com.oratakashi.covid19.ui.timeline.TimelineActivity
+import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_province.*
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
  */
-class ProvinceFragment(val parent : MainInterfaces) : Fragment(), SortDialogInterface {
+class ProvinceFragment(val parent : MainInterfaces) : DaggerFragment(), SortDialogInterface {
 
-    lateinit var viewModel: ProvinceViewModel
-    lateinit var adapter: ProvinceAdapter
+    @Inject
+    lateinit var viewmodelFactory : ViewModelProvider.Factory
 
     val data : MutableList<DataProvince> = ArrayList()
+
+    val viewModel: ProvinceViewModel by lazy {
+        ViewModelProviders.of(this, viewmodelFactory).get(ProvinceViewModel::class.java)
+    }
+
+    val adapter: ProvinceAdapter by lazy {
+        ProvinceAdapter(data, parent, context!!)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,9 +63,6 @@ class ProvinceFragment(val parent : MainInterfaces) : Fragment(), SortDialogInte
 
         ButterKnife.bind(this, view)
 
-        viewModel = ViewModelProviders.of(this).get(ProvinceViewModel::class.java)
-        adapter = ProvinceAdapter(data, parent, context!!)
-
         rvProvince.adapter = adapter
         rvProvince.layoutManager = LinearLayoutManager(context)
 
@@ -58,45 +72,46 @@ class ProvinceFragment(val parent : MainInterfaces) : Fragment(), SortDialogInte
     }
 
     fun setupViewModel(){
-        viewModel.showMessage.observe(this, Observer { message ->
-            message?.let{
-                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-            }
-        })
-        viewModel.errorProvince.observe(this, Observer { error ->
-            error?.let{
-                if(it) Snackbar.make(clBase, "Gagal memuat data!", Snackbar.LENGTH_SHORT)
-                    .setAction("Coba Lagi"){
-                        viewModel.getData()
-                    }
-            }
-        })
-        viewModel.progressProvince.observe(this, Observer { progress ->
-            progress?.let{
+        viewModel.state.observe(this, Observer { state ->
+            state?.let{
                 when(it){
-                    true -> {
+                    is Loading -> { //Handling Loading Statement
                         llLoading.visibility = View.VISIBLE
                         llContent.visibility = View.GONE
                         llMaintence.visibility = View.GONE
                     }
-                    false -> {
+                    is Result -> { //Handling Result Statement
                         llLoading.visibility = View.GONE
                         llContent.visibility = View.VISIBLE
                         llMaintence.visibility = View.GONE
+
+                        when(it.data.data.isNotEmpty()){
+                            true -> {
+                                parent.resultProvince(it.data.data)
+                                viewModel.cacheData(it.data)
+                                viewModel.getCache()
+                            }
+                            false -> {
+                                rvProvince.visibility = View.VISIBLE
+                                llMaintence.visibility = View.VISIBLE
+                                tvServer.text = "Sumber data : covid19.bnpb.go.id"
+                            }
+                        }
                     }
-                }
-            }
-        })
-        viewModel.responseProvince.observe(this, Observer { response ->
-            response?.let{
-                when(it.data.isEmpty()){
-                    true -> {
-                        rvProvince.visibility = View.VISIBLE
-                        llMaintence.visibility = View.VISIBLE
-                        tvServer.text = "Sumber data : covid19.bnpb.go.id"
-                    }
-                    false -> {
-                        parent.resultProvince(it.data)
+                    is Error -> { //Handling Error Statement
+                        llLoading.visibility = View.GONE
+                        llContent.visibility = View.VISIBLE
+                        llMaintence.visibility = View.GONE
+
+                        viewModel.getCache()
+
+                        Snackbar.make(clBase, "Gagal memuat data!", Snackbar.LENGTH_SHORT)
+                            .setAction("Coba Lagi"){
+                                viewModel.getData()
+                            }
+
+                        if(BuildConfig.DEBUG) Toast.makeText(context, it.error.message,
+                            Toast.LENGTH_SHORT).show()
                     }
                 }
             }

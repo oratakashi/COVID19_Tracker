@@ -115,6 +115,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
         db.execSQL("DROP TABLE IF EXISTS $TABLE_RECOVERED")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_DEATH")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_PROVINCE")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_TIMELINE")
 
         db.execSQL(createTableConfirm)
         db.execSQL(createTableRecovered)

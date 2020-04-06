@@ -26,7 +26,7 @@ class ApiOrata {
             .baseUrl(BuildConfig.BASE_URL_ORATA)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
             .build()
             .create(ApiEndpoint::class.java)
     }

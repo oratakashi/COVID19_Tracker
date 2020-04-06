@@ -29,11 +29,12 @@ import com.oratakashi.covid19.ui.death.DeathFragment
 import com.oratakashi.covid19.ui.province.ProvinceFragment
 import com.oratakashi.covid19.ui.recovered.RecoveredFragment
 import com.oratakashi.covid19.ui.statistik.StatistikFragment
+import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottomsheet.*
 
 
-class MainActivity : AppCompatActivity(), OnMapReadyCallback, MainInterfaces {
+class MainActivity : DaggerAppCompatActivity(), OnMapReadyCallback, MainInterfaces {
 
     private lateinit var mMap: GoogleMap
     lateinit var bsHome : BottomSheetBehavior<CardView>
@@ -124,22 +125,24 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, MainInterfaces {
         bsHome.state = BottomSheetBehavior.STATE_COLLAPSED
         mMap.clear()
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(-0.7893, 113.9213), 1f))
+        var i = 0
         data.forEach {
-            mMap.addMarker(MarkerOptions().position(
+            i++
+            if(it.lat != null && it.long != null) mMap.addMarker(MarkerOptions().position(
                 LatLng(
-                    it.lat!!.toDouble(),
-                    it.long!!.toDouble()
+                    it.lat.toDouble(),
+                    it.long.toDouble()
                 )
             ).title(
                 "${
-                    when(it.provinceState != null){
-                        true -> {
-                            "${it.provinceState}, ${it.countryRegion}"
-                        }
-                        false -> {
-                            it.countryRegion
-                        }
+                when(it.provinceState != null){
+                    true -> {
+                        "${it.provinceState}, ${it.countryRegion}"
                     }
+                    false -> {
+                        it.countryRegion
+                    }
+                }
                 }"
             )).snippet = "Confirmed : ${it.confirmed} Orang"
         }
@@ -150,10 +153,10 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, MainInterfaces {
         mMap.clear()
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(-0.7893, 113.9213), 1f))
         data.forEach {
-            mMap.addMarker(MarkerOptions().position(
+            if(it.lat != null && it.long != null) mMap.addMarker(MarkerOptions().position(
                 LatLng(
-                    it.lat!!.toDouble(),
-                    it.long!!.toDouble()
+                    it.lat.toDouble(),
+                    it.long.toDouble()
                 )
             ).title(
                 "${
@@ -175,10 +178,10 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, MainInterfaces {
         mMap.clear()
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(LatLng(-0.7893, 113.9213), 1f))
         data.forEach {
-            mMap.addMarker(MarkerOptions().position(
+            if(it.lat != null && it.long != null) mMap.addMarker(MarkerOptions().position(
                 LatLng(
-                    it.lat!!.toDouble(),
-                    it.long!!.toDouble()
+                    it.lat.toDouble(),
+                    it.long.toDouble()
                 )
             ).title(
                 "${

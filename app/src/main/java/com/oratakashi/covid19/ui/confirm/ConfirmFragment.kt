@@ -8,27 +8,39 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.google.android.material.snackbar.Snackbar
+import com.oratakashi.covid19.BuildConfig
 
 import com.oratakashi.covid19.R
 import com.oratakashi.covid19.data.db.Database
 import com.oratakashi.covid19.data.model.localstorage.DataGlobal
+import com.oratakashi.covid19.ui.confirm.ConfirmState.Error
+import com.oratakashi.covid19.ui.confirm.ConfirmState.Loading
+import com.oratakashi.covid19.ui.confirm.ConfirmState.Result
 import com.oratakashi.covid19.ui.main.MainInterfaces
 import com.oratakashi.covid19.ui.sortirdialog.sort_global.SortDialogFragment
 import com.oratakashi.covid19.ui.sortirdialog.SortDialogInterface
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_confirm.*
+import javax.inject.Inject
 
 /**
  * Class UI for Confirm
  */
-class ConfirmFragment(val parent : MainInterfaces) : Fragment(), SortDialogInterface {
+class ConfirmFragment(val parent : MainInterfaces) : DaggerFragment(), SortDialogInterface {
 
-    lateinit var viewModel: ConfirmViewModel
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
     lateinit var adapter: ConfirmAdapter
+
+    val viewModel : ConfirmViewModel by lazy {
+        ViewModelProviders.of(this, viewModelFactory).get(ConfirmViewModel::class.java)
+    }
 
     val data : MutableList<DataGlobal> = ArrayList()
 
@@ -44,7 +56,6 @@ class ConfirmFragment(val parent : MainInterfaces) : Fragment(), SortDialogInter
 
         ButterKnife.bind(this, view)
 
-        viewModel = ViewModelProviders.of(this).get(ConfirmViewModel::class.java)
         adapter = ConfirmAdapter(data, parent, context!!)
 
         rvConfirm.adapter = adapter
@@ -60,39 +71,36 @@ class ConfirmFragment(val parent : MainInterfaces) : Fragment(), SortDialogInter
     }
 
     fun setupViewModel(){
-        viewModel.showMessage.observe(this, Observer { message ->
-            message?.let{
-                Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-                Log.e("Debug", it)
-            }
-        })
-        viewModel.errorConfirm.observe(this, Observer { error ->
-            error?.let{
-                if(it) Snackbar.make(clBase, "Gagal memuat data!", Snackbar.LENGTH_SHORT)
-                    .setAction("Coba Lagi"){
-                        viewModel.getConfirm()
-                    }.show()
-            }
-        })
-        viewModel.progressConfirm.observe(this, Observer { progress ->
-            progress?.let{
+        viewModel.state.observe(this, Observer { state ->
+            state?.let{
                 when(it){
-                    true -> {
+                    is Loading -> {
                         llLoading.visibility = View.VISIBLE
                         llContent.visibility = View.GONE
                     }
-                    false -> {
+                    is Result -> {
                         llLoading.visibility = View.GONE
                         llContent.visibility = View.VISIBLE
+                        viewModel.cacheData(it.data)
+                        viewModel.getCache()
+                        parent.resultConfirmed(it.data)
+                    }
+                    is Error -> {
+                        llLoading.visibility = View.GONE
+                        llContent.visibility = View.VISIBLE
+
+                        Snackbar.make(clBase, "Gagal memuat data!", Snackbar.LENGTH_SHORT)
+                            .setAction("Coba Lagi"){
+                                viewModel.getData()
+                            }.show()
+
+                        if(BuildConfig.DEBUG) Toast.makeText(context, it.error.message,
+                            Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         })
-        viewModel.responseConfirm.observe(this, Observer { response ->
-            response?.let{
-                parent.resultConfirmed(it)
-            }
-        })
+
         viewModel.cacheConfirm.observe(this, Observer { cache ->
             cache?.let{
                 data.clear()
@@ -101,7 +109,7 @@ class ConfirmFragment(val parent : MainInterfaces) : Fragment(), SortDialogInter
             }
         })
 
-        viewModel.getConfirm()
+        viewModel.getData()
     }
 
     override fun onSort(option: String) {

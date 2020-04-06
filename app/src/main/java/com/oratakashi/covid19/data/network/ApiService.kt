@@ -23,13 +23,14 @@ class ApiService {
                     HttpLoggingInterceptor.Level.NONE
             })
             .readTimeout(30, TimeUnit.SECONDS)
+            .retryOnConnectionFailure(true)
             .writeTimeout(30, TimeUnit.SECONDS)
             .build()
         api = Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.createAsync())
             .build()
             .create(ApiEndpoint::class.java)
     }
