@@ -1,8 +1,6 @@
 package com.oratakashi.covid19.ui.confirm
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,13 +16,16 @@ import com.oratakashi.covid19.BuildConfig
 
 import com.oratakashi.covid19.R
 import com.oratakashi.covid19.data.db.Database
+import com.oratakashi.covid19.data.db.Sessions
 import com.oratakashi.covid19.data.model.localstorage.DataGlobal
+import com.oratakashi.covid19.root.App
 import com.oratakashi.covid19.ui.confirm.ConfirmState.Error
 import com.oratakashi.covid19.ui.confirm.ConfirmState.Loading
 import com.oratakashi.covid19.ui.confirm.ConfirmState.Result
 import com.oratakashi.covid19.ui.main.MainInterfaces
 import com.oratakashi.covid19.ui.sortirdialog.sort_global.SortDialogFragment
 import com.oratakashi.covid19.ui.sortirdialog.SortDialogInterface
+import com.oratakashi.covid19.utils.Converter
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_confirm.*
 import javax.inject.Inject
@@ -56,7 +57,18 @@ class ConfirmFragment(val parent : MainInterfaces) : DaggerFragment(), SortDialo
 
         ButterKnife.bind(this, view)
 
-        adapter = ConfirmAdapter(data, parent, context!!)
+        adapter = ConfirmAdapter(data, parent, requireContext())
+
+        when(App.sessions!!.getInt(Sessions.last_confirmed)){
+            0 -> {
+                Toast.makeText(context, "Jumlah data belum tersedia!", Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                tvConfirmed.text = Converter.numberFormat(App.sessions!!.getInt(Sessions.last_confirmed))
+                tvRecovered.text = Converter.numberFormat(App.sessions!!.getInt(Sessions.last_recovered))
+                tvDeath.text = Converter.numberFormat(App.sessions!!.getInt(Sessions.last_death))
+            }
+        }
 
         rvConfirm.adapter = adapter
         rvConfirm.layoutManager = LinearLayoutManager(context)

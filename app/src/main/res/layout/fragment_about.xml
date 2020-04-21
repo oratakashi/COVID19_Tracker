@@ -44,6 +44,14 @@
             android:text="@string/position" />
     </LinearLayout>
 
+    <ImageView
+        android:layout_width="@dimen/size_32"
+        android:layout_height="@dimen/size_32"
+        android:src="@drawable/ic_settings"
+        android:layout_marginTop="@dimen/margin_12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <View
         android:id="@+id/view2"
         android:layout_width="match_parent"

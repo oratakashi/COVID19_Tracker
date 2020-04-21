@@ -12,7 +12,7 @@
     app:behavior_hideable="false"
     app:cardCornerRadius="@dimen/radius_10"
     app:cardElevation="@dimen/elevation_8"
-    app:behavior_peekHeight="250dp"
+    app:behavior_peekHeight="270dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
     <LinearLayout
         android:layout_width="match_parent"

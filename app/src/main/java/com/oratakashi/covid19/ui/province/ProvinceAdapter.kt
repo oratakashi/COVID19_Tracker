@@ -31,11 +31,11 @@ class ProvinceAdapter(
         holder.itemView.tvConfirmed.text = "${context.resources.getString(R.string.title_confirm)} : ${data[position].confirm} Orang"
         holder.itemView.tvRecovered.text = "${context.resources.getString(R.string.title_recovered)} : ${data[position].recovered} Orang"
         holder.itemView.tvDeath.text = "${context.resources.getString(R.string.title_deaths)} : ${data[position].death} Orang"
-        holder.itemView.tvUpdate.visibility = View.VISIBLE
+//        holder.itemView.tvUpdate.visibility = View.VISIBLE
 
         val df = SimpleDateFormat("dd MMMM yyyy")
 
-        holder.itemView.tvUpdate.text = "Diperbarui : ${df.format(Calendar.getInstance().time)}"
+//        holder.itemView.tvUpdate.text = "Diperbarui : ${df.format(Calendar.getInstance().time)}"
 
         holder.itemView.llAdapter.setOnClickListener {
             parent.getLocation(

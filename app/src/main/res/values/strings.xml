@@ -53,4 +53,32 @@
     <string name="title_search_date">Cari Tanggal</string>
     <string name="title_ops">Ooopss...</string>
     <string name="title_command_empty_search">Maaf, data yang kamu cari tidak ditemukan di server provider kami. Silahkan cari dengan kata kunci lain!</string>
+    <string name="title_home">Beranda</string>
+    <string name="title_timeline">Timeline</string>
+    <string name="title_faq">FAQ</string>
+    <string name="title_indonesia">Indonesia</string>
+    <string name="title_new_case">Total Kasus</string>
+    <string name="title_refresh">Memperbarui data...</string>
+    <string name="title_description_data_global">Statistik peredaran COVID19 seluruh dunia</string>
+    <string name="tv_detail_data">Detail data</string>
+    <string name="title_beware_of">Beware of</string>
+    <string name="title_last_updated">Last updated</string>
+    <string name="title_total_kasus_global">Total Kasus Global</string>
+    <string name="title_placeholder_persent_death">Meninggal : 0%</string>
+    <string name="title_placeholder_persent_recovered">Sembuh : 0%</string>
+    <string name="title_activity_global_detail">GlobalDetailActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="title_overview">Overview</string>
+    <string name="title_detail">Detail</string>
+    <string name="title_confirm_description">Total positif COVID-19</string>
+    <string name="title_person">Orang</string>
+    <string name="title_0_percent">0%</string>
+    <string name="title_recovered_description">dari jumlah terkonfirmasi</string>
+    <string name="title_death_description">dari jumlah terkonfirmasi</string>
+    <string name="title_placeholder_percent_recovered">0% Sembuh</string>
+    <string name="title_placeholder_percent_death">0% Meninggal</string>
 </resources>

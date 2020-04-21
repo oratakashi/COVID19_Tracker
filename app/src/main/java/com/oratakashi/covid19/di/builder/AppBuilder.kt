@@ -7,7 +7,12 @@ import com.oratakashi.covid19.ui.confirm.ConfirmFragment
 import com.oratakashi.covid19.ui.confirm.ConfirmModule
 import com.oratakashi.covid19.ui.death.DeathFragment
 import com.oratakashi.covid19.ui.death.DeathModule
-import com.oratakashi.covid19.ui.main.MainActivity
+import com.oratakashi.covid19.ui.home.GlobalModule
+import com.oratakashi.covid19.ui.home.HomeFragment
+import com.oratakashi.covid19.ui.home.LocalModule
+import com.oratakashi.covid19.ui.main.v1.MainActivity
+import com.oratakashi.covid19.ui.main.v2.GlobalDetailActivity
+import com.oratakashi.covid19.ui.main.v2.SecondaryActivity
 import com.oratakashi.covid19.ui.province.ProvinceFragment
 import com.oratakashi.covid19.ui.province.ProvinceModule
 import com.oratakashi.covid19.ui.recovered.RecoveredFragment
@@ -85,4 +90,25 @@ abstract class AppBuilder {
     @Presentation
     @ContributesAndroidInjector(modules = [DeathModule::class])
     abstract fun contributeDeathFragment() :DeathFragment
+
+    /**
+     * Register Secondary Activity
+     */
+    @Presentation
+    @ContributesAndroidInjector
+    abstract fun contributeSecondaryActivity() : SecondaryActivity
+
+    /**
+     * Register Home Fragment
+     */
+    @Presentation
+    @ContributesAndroidInjector(modules = [LocalModule::class, GlobalModule::class])
+    abstract fun contributeHomeFragment() :HomeFragment
+
+    /**
+     * Register for Global Detail Activity
+     */
+    @Presentation
+    @ContributesAndroidInjector
+    abstract fun contributeGlobalDetailActivity() : GlobalDetailActivity
 }

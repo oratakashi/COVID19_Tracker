@@ -86,4 +86,19 @@
     <dimen name="margin_75">75dp</dimen>
     <dimen name="margin_13">13dp</dimen>
     <dimen name="size_512">512dp</dimen>
+    <dimen name="margin_12">12dp</dimen>
+    <dimen name="size_35">35dp</dimen>
+    <dimen name="margin_180">180dp</dimen>
+    <dimen name="margin_190">190dp</dimen>
+    <dimen name="margin_35">35dp</dimen>
+    <dimen name="margin_2">2dp</dimen>
+    <dimen name="font_17">17sp</dimen>
+    <dimen name="margin_1">1dp</dimen>
+    <dimen name="radius_15">15dp</dimen>
+    <dimen name="size_85">85dp</dimen>
+    <dimen name="size_2dp">2dp</dimen>
+    <dimen name="size_8">8dp</dimen>
+    <dimen name="size_5">5dp</dimen>
+    <dimen name="margin_39">39dp</dimen>
+    <dimen name="margin_27">27dp</dimen>
 </resources>

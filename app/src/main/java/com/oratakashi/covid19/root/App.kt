@@ -2,6 +2,7 @@ package com.oratakashi.covid19.root
 
 import com.oratakashi.covid19.data.db.Database
 import com.oratakashi.covid19.data.db.QueryBuilder
+import com.oratakashi.covid19.data.db.Sessions
 import com.oratakashi.covid19.data.network.ApiBNPB
 import com.oratakashi.covid19.data.network.ApiOrata
 import com.oratakashi.covid19.data.network.ApiService
@@ -20,6 +21,7 @@ class App : DaggerApplication() {
         var builder : QueryBuilder ?= null
         var disposable : CompositeDisposable?= null
         var db : Database ?= null
+        var sessions : Sessions ?= null
     }
 
     override fun onCreate() {
@@ -29,6 +31,7 @@ class App : DaggerApplication() {
         orata = ApiOrata()
         disposable = CompositeDisposable()
         db = Database(this)
+        sessions = Sessions(this)
 
         builder = object : QueryBuilder() {}
     }

@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.oratakashi.covid19.R
 import com.oratakashi.covid19.data.model.localstorage.DataGlobal
-import com.oratakashi.covid19.data.model.recovered.DataRecovered
 import com.oratakashi.covid19.ui.main.MainInterfaces
 import kotlinx.android.synthetic.main.adapter_list.view.*
 

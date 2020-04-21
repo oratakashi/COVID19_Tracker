@@ -1,6 +1,5 @@
 package com.oratakashi.covid19.ui.province
 
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -28,7 +27,6 @@ import com.oratakashi.covid19.ui.province.ProvinceState.Result
 import com.oratakashi.covid19.ui.sortirdialog.SortDialogInterface
 import com.oratakashi.covid19.ui.sortirdialog.sort_indonesia.SortLocalFragment
 import com.oratakashi.covid19.ui.timeline.TimelineActivity
-import dagger.android.support.AndroidSupportInjection
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_province.*
 import javax.inject.Inject

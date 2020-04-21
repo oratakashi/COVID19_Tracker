@@ -13,7 +13,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.timeline.TimelineActivity"></activity>
+        <activity
+            android:name=".ui.main.v2.GlobalDetailActivity"
+            android:label="@string/title_activity_global_detail"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ui.main.v2.SecondaryActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.timeline.TimelineActivity" />
         <!--
              API KEY diperlukan untuk menampilkan fitur maps
              Anda bisa dapatkan secara resmi di Situs official GoogleMap
@@ -23,7 +30,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".ui.main.v1.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

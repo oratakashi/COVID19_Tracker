@@ -73,6 +73,8 @@ abstract class QueryBuilder {
             this.where = "$column = '$where'"
         }else if(operator == "like"){
             this.where = "$column ${operator.toUpperCase()} '%$where%'"
+        }else if(operator == "!="){
+            this.where = "$column $operator '$where'"
         }
     }
 
@@ -222,7 +224,7 @@ abstract class QueryBuilder {
     fun insert(data : DataTimeline){
         val values = ContentValues()
         var date =
-            SimpleDateFormat("dd-MMMM-yyyy HH:mm:ss").format(Date(data.attributes.tanggal!!))
+            SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date(data.attributes.tanggal!!))
         val array = date.split(" ")
         values.put(Database.date, array[0])
         values.put(Database.case, data.attributes.case)

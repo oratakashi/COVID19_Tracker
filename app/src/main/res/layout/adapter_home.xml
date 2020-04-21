@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/dark_bg"
+    android:id="@+id/rlAdapter"
+    android:paddingTop="@dimen/padding_10">
+    <LinearLayout
+        android:id="@+id/llContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_10"
+            android:fontFamily="@font/bold"
+            android:text="@string/foo"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_18" />
+        <TextView
+            android:id="@+id/tvRecovered"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_placeholder_persent_recovered"
+            android:textSize="@dimen/font_12"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/green"
+            android:layout_marginStart="@dimen/margin_10" />
+        <TextView
+            android:id="@+id/tvDeath"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_placeholder_persent_death"
+            android:textSize="@dimen/font_12"
+            android:fontFamily="@font/regular"
+            android:textColor="@color/red"
+            android:layout_marginStart="@dimen/margin_10" />
+    </LinearLayout>
+    <ImageView
+        android:layout_width="@dimen/size_24"
+        android:layout_height="@dimen/size_24"
+        android:src="@drawable/ic_select"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1dp"
+        android:layout_marginTop="@dimen/margin_15"
+        android:layout_below="@+id/llContent"
+        android:background="@color/line"/>
+</RelativeLayout>

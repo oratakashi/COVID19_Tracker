@@ -1,10 +1,8 @@
-package com.oratakashi.covid19.ui.main
+package com.oratakashi.covid19.ui.main.v1
 
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import butterknife.ButterKnife
@@ -26,15 +24,16 @@ import com.oratakashi.covid19.data.model.statistik.ResponseStatistik
 import com.oratakashi.covid19.ui.about.AboutFragment
 import com.oratakashi.covid19.ui.confirm.ConfirmFragment
 import com.oratakashi.covid19.ui.death.DeathFragment
+import com.oratakashi.covid19.ui.main.MainInterfaces
 import com.oratakashi.covid19.ui.province.ProvinceFragment
 import com.oratakashi.covid19.ui.recovered.RecoveredFragment
 import com.oratakashi.covid19.ui.statistik.StatistikFragment
 import dagger.android.support.DaggerAppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottomsheet.*
 
 
-class MainActivity : DaggerAppCompatActivity(), OnMapReadyCallback, MainInterfaces {
+class MainActivity : DaggerAppCompatActivity(), OnMapReadyCallback,
+    MainInterfaces {
 
     private lateinit var mMap: GoogleMap
     lateinit var bsHome : BottomSheetBehavior<CardView>
@@ -52,20 +51,6 @@ class MainActivity : DaggerAppCompatActivity(), OnMapReadyCallback, MainInterfac
         bsHome = BottomSheetBehavior.from(bottom_sheet)
 
         openFragment(StatistikFragment(this), "statistik")
-
-        swLive.setOnCheckedChangeListener { buttonView, isChecked ->
-            when(isChecked){
-                true -> {
-                    AlertDialog.Builder(this)
-                        .setTitle("Opps....")
-                        .setMessage("Maaf fitur Live data belum tersedia, karena server sedang dalam perbaikan!")
-                        .setPositiveButton("Tutup"){ dialog, _ ->
-                            swLive.isChecked = false
-                            dialog.dismiss()
-                        }.setCancelable(false).show()
-                }
-            }
-        }
     }
 
     fun openFragment(fragment : Fragment, name : String){

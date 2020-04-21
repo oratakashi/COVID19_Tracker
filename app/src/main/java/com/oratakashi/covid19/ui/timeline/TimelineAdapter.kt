@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.vipulasri.timelineview.TimelineView
 import com.oratakashi.covid19.R
 import com.oratakashi.covid19.data.model.localstorage.DataTimeline
+import com.oratakashi.covid19.utils.Converter
 import com.oratakashi.covid19.utils.Tmp
 import com.oratakashi.covid19.utils.VectorDrawableUtils
 import kotlinx.android.synthetic.main.adapter_timeline.view.*
@@ -47,7 +48,7 @@ class TimelineAdapter(val data : List<DataTimeline>, val context: Context) : Rec
             }
         }
 
-        holder.itemView.tvDate.text = data[position].date
+        holder.itemView.tvDate.text = Converter.dateFormatIndo(data[position].date!!)
         holder.itemView.tvCase.text =
             "${context.resources.getString(R.string.title_case)} : ${data[position].case}"
         holder.itemView.tvConfirmed.text =

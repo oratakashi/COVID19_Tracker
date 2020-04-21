@@ -10,11 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.oratakashi.covid19.BuildConfig
 import com.oratakashi.covid19.R
-import com.oratakashi.covid19.ui.main.MainActivity
+import com.oratakashi.covid19.ui.main.v1.MainActivity
+import com.oratakashi.covid19.ui.main.v2.SecondaryActivity
 import com.oratakashi.covid19.ui.splash.SplashState.Error
 import com.oratakashi.covid19.ui.splash.SplashState.Loading
 import com.oratakashi.covid19.ui.splash.SplashState.Result
-import com.oratakashi.covid19.utils.NetworkUtils
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 import javax.inject.Inject
@@ -34,6 +34,9 @@ class SplashActivity : DaggerAppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         tvVersion.text = "Version : ${BuildConfig.VERSION_NAME}"
+
+        startActivity(Intent(applicationContext, SecondaryActivity::class.java))
+        finish()
 
         viewModel.state.observe(this, Observer { state ->
             state?.let{
@@ -86,15 +89,15 @@ class SplashActivity : DaggerAppCompatActivity() {
             }
         })
 
-        NetworkUtils.checkConnectivity(this, object : NetworkUtils.NetworkUtilCallback {
-            override fun onSuccess() {
-                viewModel.getData()
-            }
-
-            override fun onCancel() {
-                startActivity(Intent(applicationContext, MainActivity::class.java))
-                finish()
-            }
-        })
+//        NetworkUtils.checkConnectivity(this, object : NetworkUtils.NetworkUtilCallback {
+//            override fun onSuccess() {
+//                viewModel.getData()
+//            }
+//
+//            override fun onCancel() {
+//                startActivity(Intent(applicationContext, MainActivity::class.java))
+//                finish()
+//            }
+//        })
     }
 }

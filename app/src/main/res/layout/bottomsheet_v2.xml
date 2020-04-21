@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:id="@+id/bottom_sheet"
+    android:background="@drawable/rounded_dialog_v2"
+    android:padding="16dp"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="270dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    <View
+        android:layout_width="@dimen/size_50"
+        android:layout_height="@dimen/size_3"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/line" />
+
+    <View
+        android:layout_width="@dimen/size_50"
+        android:layout_height="@dimen/size_3"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_3"
+        android:layout_marginBottom="@dimen/padding_10"
+        android:background="@color/line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/margin_20"
+        android:weightSum="2">
+        <LinearLayout
+            android:id="@+id/llOverview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/tvOverview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_overview"
+                android:textColor="@color/white"
+                android:textAlignment="center"
+                android:textSize="@dimen/font_16"
+                android:layout_marginBottom="@dimen/margin_5"
+                android:fontFamily="@font/bold"/>
+            <View
+                android:id="@+id/vOverview"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_3"
+                android:layout_marginStart="@dimen/margin_70"
+                android:layout_marginEnd="@dimen/margin_70"
+                android:background="@color/colorPrimary"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/tvDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_detail"
+                android:textColor="@color/grey"
+                android:textAlignment="center"
+                android:textSize="@dimen/font_16"
+                android:layout_marginBottom="@dimen/margin_5"
+                android:fontFamily="@font/regular"/>
+            <View
+                android:id="@+id/vDetail"
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_3"
+                android:layout_marginStart="@dimen/margin_70"
+                android:layout_marginEnd="@dimen/margin_70"
+                android:background="@color/colorPrimary"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_1dp"
+        android:background="@color/line"
+        android:layout_marginTop="@dimen/margin_20"/>
+
+    <FrameLayout
+        android:id="@+id/flHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_20"/>
+</LinearLayout>

@@ -1,65 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@color/dark_bg"
     android:id="@+id/llAdapter"
     android:paddingTop="@dimen/padding_10"
     android:layout_height="wrap_content">
+
     <TextView
         android:id="@+id/tvCountry"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/foo"
-        android:textSize="@dimen/font_18"
         android:fontFamily="@font/bold"
+        android:text="@string/foo"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_18"
         android:layout_marginStart="@dimen/margin_10"
         android:layout_marginEnd="@dimen/margin_10"
-        android:textColor="@color/grey"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvRecoveredPercent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:drawableEnd="@drawable/ic_circle_blue"
+        android:drawablePadding="@dimen/padding_10"
+        android:fontFamily="@font/bold"
+        android:text="@string/title_placeholder_percent_recovered"
+        android:textAlignment="textEnd"
+        android:textColor="@color/white"
+        android:visibility="invisible"
+        android:layout_marginBottom="@dimen/margin_25"
+        android:textSize="@dimen/font_12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvDeathPercent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin_10"
+        android:drawableEnd="@drawable/ic_circle_red"
+        android:drawablePadding="@dimen/padding_10"
+        android:fontFamily="@font/bold"
+        android:textAlignment="textEnd"
+        android:visibility="invisible"
+        android:text="@string/title_placeholder_percent_death"
+        android:textColor="@color/white"
+        android:textSize="@dimen/font_12"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRecoveredPercent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_10"
+        android:text="@string/title_confirm"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/font_12"
+        android:fontFamily="@font/regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCountry" />
+
     <TextView
         android:id="@+id/tvConfirmed"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/regular"
         android:text="@string/foo"
-        android:textSize="@dimen/font_12"
         android:textColor="@color/grey"
+        android:textSize="@dimen/font_12"
         android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginEnd="@dimen/margin_10"
-        android:fontFamily="@font/regular"/>
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_10"
+        android:text="@string/title_recovered"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/font_12"
+        android:fontFamily="@font/regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
     <TextView
         android:id="@+id/tvRecovered"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_39"
+        android:fontFamily="@font/regular"
         android:text="@string/foo"
+        android:textColor="@color/grey"
         android:textSize="@dimen/font_12"
-        android:textColor="@color/green"
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/tvConfirmed" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginEnd="@dimen/margin_10"
-        android:fontFamily="@font/regular"/>
+        android:text="@string/title_deaths"
+        android:textColor="@color/grey"
+        android:textSize="@dimen/font_12"
+        android:fontFamily="@font/regular"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
     <TextView
         android:id="@+id/tvDeath"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/regular"
         android:text="@string/foo"
-        android:textSize="@dimen/font_12"
-        android:textColor="@color/red"
-        android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginEnd="@dimen/margin_10"
-        android:fontFamily="@font/regular"/>
-    <TextView
-        android:id="@+id/tvUpdate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/foo"
-        android:textSize="@dimen/font_12"
         android:textColor="@color/grey"
-        android:visibility="gone"
-        android:layout_marginStart="@dimen/margin_10"
-        android:layout_marginEnd="@dimen/margin_10"
-        android:fontFamily="@font/regular"/>
+        android:textSize="@dimen/font_12"
+        android:layout_marginStart="@dimen/margin_27"
+        app:layout_constraintStart_toEndOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/tvRecovered" />
+
     <View
+        android:id="@+id/view3"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/line"
-        android:layout_marginTop="@dimen/margin_10"/>
-</LinearLayout>
+        android:layout_marginTop="@dimen/margin_10"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,10 +13,13 @@ import com.google.android.material.snackbar.Snackbar
 import com.oratakashi.covid19.BuildConfig
 
 import com.oratakashi.covid19.R
+import com.oratakashi.covid19.data.db.Sessions
+import com.oratakashi.covid19.root.App
 import com.oratakashi.covid19.ui.main.MainInterfaces
 import com.oratakashi.covid19.ui.statistik.StatistikState.Error
 import com.oratakashi.covid19.ui.statistik.StatistikState.Loading
 import com.oratakashi.covid19.ui.statistik.StatistikState.Result
+import com.oratakashi.covid19.utils.Converter
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_statistik.*
 import javax.inject.Inject
@@ -48,7 +51,7 @@ class StatistikFragment(val parent : MainInterfaces) : DaggerFragment() {
     }
 
     fun setupViewModel(){
-        viewModel.state.observe(this, Observer { state ->
+        viewModel.state.observe(viewLifecycleOwner, Observer { state ->
             state?.let{
                 when(it){
                     is Loading -> {
@@ -57,16 +60,34 @@ class StatistikFragment(val parent : MainInterfaces) : DaggerFragment() {
                         tvDeath.text = "Memuat data..."
                     }
                     is Result -> {
-                        tvConfirmed.text = it.data.confirmed!!.value.toString()+" Orang"
-                        tvRecovered.text = it.data.recovered!!.value.toString()+" Orang"
-                        tvDeath.text = it.data.deaths!!.value.toString()+" Orang"
+                        tvConfirmed.text = Converter.numberFormat(it.data.confirmed!!.value)
+                        tvRecovered.text = Converter.numberFormat(it.data.recovered!!.value)
+                        tvRecoveredPercent.text = Converter.persentase(
+                            it.data.recovered.value.toFloat(), it.data.confirmed.value.toFloat()
+                        )
+                        tvDeath.text = Converter.numberFormat(it.data.deaths!!.value)
+                        tvDeathPercent.text = Converter.persentase(
+                            it.data.deaths.value.toFloat(), it.data.confirmed.value.toFloat()
+                        )
+
+                        App.sessions!!.putInt(Sessions.last_confirmed, it.data.confirmed.value)
+                        App.sessions!!.putInt(Sessions.last_recovered, it.data.recovered.value)
+                        App.sessions!!.putInt(Sessions.last_death, it.data.deaths.value)
 
                         parent.resultStatistik(it.data)
                     }
                     is Error -> {
-                        tvConfirmed.text = "Gagal mengambil data"
-                        tvRecovered.text = "Gagal mengambil data"
-                        tvDeath.text = "Gagal mengambil data"
+                        tvConfirmed.text = App.sessions!!.getInt(Sessions.last_confirmed).toString()
+                        tvRecovered.text = App.sessions!!.getInt(Sessions.last_recovered).toString()
+                        tvRecoveredPercent.text = Converter.persentase(
+                            App.sessions!!.getInt(Sessions.last_recovered).toFloat(),
+                            App.sessions!!.getInt(Sessions.last_confirmed).toFloat()
+                        )
+                        tvDeath.text = App.sessions!!.getInt(Sessions.last_death).toString()
+                        tvDeathPercent.text = Converter.persentase(
+                            App.sessions!!.getInt(Sessions.last_death).toFloat(),
+                            App.sessions!!.getInt(Sessions.last_confirmed).toFloat()
+                        )
 
                         Snackbar.make(clBase, "Gagal memuat data statistik!", Snackbar.LENGTH_SHORT)
                             .setAction("Coba Lagi"){
