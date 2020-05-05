@@ -7,9 +7,10 @@ import com.oratakashi.covid19.ui.confirm.ConfirmFragment
 import com.oratakashi.covid19.ui.confirm.ConfirmModule
 import com.oratakashi.covid19.ui.death.DeathFragment
 import com.oratakashi.covid19.ui.death.DeathModule
-import com.oratakashi.covid19.ui.home.GlobalModule
+import com.oratakashi.covid19.ui.home.global_module.GlobalModule
 import com.oratakashi.covid19.ui.home.HomeFragment
-import com.oratakashi.covid19.ui.home.LocalModule
+import com.oratakashi.covid19.ui.home.local_module.LocalModule
+import com.oratakashi.covid19.ui.home.news_module.NewsModule
 import com.oratakashi.covid19.ui.main.v1.MainActivity
 import com.oratakashi.covid19.ui.main.v2.GlobalDetailActivity
 import com.oratakashi.covid19.ui.main.v2.SecondaryActivity
@@ -22,6 +23,7 @@ import com.oratakashi.covid19.ui.splash.SplashModule
 import com.oratakashi.covid19.ui.statistik.StatistikFragment
 import com.oratakashi.covid19.ui.statistik.StatistikModule
 import com.oratakashi.covid19.ui.timeline.TimelineActivity
+import com.oratakashi.covid19.ui.timeline.TimelineFragment
 import com.oratakashi.covid19.ui.timeline.TimelineModule
 import dagger.Binds
 import dagger.Module
@@ -102,7 +104,7 @@ abstract class AppBuilder {
      * Register Home Fragment
      */
     @Presentation
-    @ContributesAndroidInjector(modules = [LocalModule::class, GlobalModule::class])
+    @ContributesAndroidInjector(modules = [LocalModule::class, GlobalModule::class, NewsModule::class])
     abstract fun contributeHomeFragment() :HomeFragment
 
     /**
@@ -111,4 +113,11 @@ abstract class AppBuilder {
     @Presentation
     @ContributesAndroidInjector
     abstract fun contributeGlobalDetailActivity() : GlobalDetailActivity
+
+    /**
+     * Register Timeline Fragment
+     */
+    @Presentation
+    @ContributesAndroidInjector(modules = [TimelineModule::class])
+    abstract fun contributeTimelineFragment() : TimelineFragment
 }

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.oratakashi.covid19.R
 import com.oratakashi.covid19.data.model.localstorage.DataProvince
 import com.oratakashi.covid19.ui.main.MainInterfaces
+import com.oratakashi.covid19.utils.Converter
 import kotlinx.android.synthetic.main.adapter_list.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -28,14 +29,21 @@ class ProvinceAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.itemView.tvCountry.text = data[position].provinsi
-        holder.itemView.tvConfirmed.text = "${context.resources.getString(R.string.title_confirm)} : ${data[position].confirm} Orang"
-        holder.itemView.tvRecovered.text = "${context.resources.getString(R.string.title_recovered)} : ${data[position].recovered} Orang"
-        holder.itemView.tvDeath.text = "${context.resources.getString(R.string.title_deaths)} : ${data[position].death} Orang"
-//        holder.itemView.tvUpdate.visibility = View.VISIBLE
+        holder.itemView.tvConfirmed.text = "${Converter.numberFormat(data[position].confirm!!)} Orang"
+        holder.itemView.tvRecovered.text = "${Converter.numberFormat(data[position].recovered!!)} Orang"
+        holder.itemView.tvDeath.text = "${Converter.numberFormat(data[position].death!!)} Orang"
 
-        val df = SimpleDateFormat("dd MMMM yyyy")
+        holder.itemView.tvRecoveredPercent.visibility = View.VISIBLE
+        holder.itemView.tvRecoveredPercent.text = Converter.persentase(
+            data[position].recovered!!.toFloat(),
+            data[position].confirm!!.toFloat()
+        )+" "+context.resources.getString(R.string.title_recovered)
+        holder.itemView.tvDeathPercent.visibility = View.VISIBLE
+        holder.itemView.tvDeathPercent.text = Converter.persentase(
+            data[position].death!!.toFloat(),
+            data[position].confirm!!.toFloat()
+        )+" "+context.resources.getString(R.string.title_deaths)
 
-//        holder.itemView.tvUpdate.text = "Diperbarui : ${df.format(Calendar.getInstance().time)}"
 
         holder.itemView.llAdapter.setOnClickListener {
             parent.getLocation(

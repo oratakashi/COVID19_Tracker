@@ -7,8 +7,6 @@
     app:cardBackgroundColor="@color/dark_bg"
     android:orientation="vertical"
     android:padding="16dp"
-    android:layout_marginStart="@dimen/margin_5"
-    android:layout_marginEnd="@dimen/margin_5"
     app:behavior_hideable="false"
     app:cardCornerRadius="@dimen/radius_10"
     app:cardElevation="@dimen/elevation_8"

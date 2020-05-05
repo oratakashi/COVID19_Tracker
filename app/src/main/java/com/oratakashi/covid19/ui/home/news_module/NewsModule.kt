@@ -1,4 +1,4 @@
-package com.oratakashi.covid19.ui.home
+package com.oratakashi.covid19.ui.home.news_module
 
 import androidx.lifecycle.ViewModel
 import com.oratakashi.covid19.data.network.ApiEndpoint
@@ -11,17 +11,17 @@ import retrofit2.Retrofit
 import javax.inject.Named
 
 @Module
-abstract class GlobalModule {
+abstract class NewsModule {
     @Module
     companion object{
         @JvmStatic
         @Provides
-        @Named("global")
-        fun providesApiEndPoint(@Named("global") retrofit: Retrofit) : ApiEndpoint =
+        @Named("Orata")
+        fun providesApiEndPoint(@Named("Orata") retrofit: Retrofit) : ApiEndpoint =
             retrofit.create(ApiEndpoint::class.java)
     }
     @Binds
     @IntoMap
-    @ViewModelKey(GlobalViewModel::class)
-    abstract fun bindViewModel(viewModel: GlobalViewModel) : ViewModel
+    @ViewModelKey(NewsViewModel::class)
+    abstract fun bindViewModel(viewModel: NewsViewModel) : ViewModel
 }

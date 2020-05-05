@@ -33,6 +33,18 @@ class Converter {
             return format.format(newDate)
         }
 
+        @Throws(ParseException::class)
+        fun dateFormatNews(date: String) : String{
+            var format = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            var newDate : Date? = null
+
+            newDate = format.parse(date)
+
+            format = SimpleDateFormat("HH:mm")
+
+            return "Hari ini pukul "+format.format(newDate)
+        }
+
         fun decimalFormat(number : Int): String{
             val numberFormat = DecimalFormat("00")
             return numberFormat.format(number.toLong())

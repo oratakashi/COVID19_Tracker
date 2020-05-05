@@ -11,8 +11,8 @@ android {
         applicationId "com.oratakashi.covid19"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 5
-        versionName "1.4"
+        versionCode 6
+        versionName "2.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -107,6 +107,9 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:2.21"
 
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
+
+    // Shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
 
     implementation 'com.wang.avi:library:2.1.3'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'

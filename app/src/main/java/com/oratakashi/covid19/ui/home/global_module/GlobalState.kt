@@ -1,7 +1,6 @@
-package com.oratakashi.covid19.ui.home
+package com.oratakashi.covid19.ui.home.global_module
 
 import com.oratakashi.covid19.data.model.statistik.ResponseStatistik
-import java.util.*
 
 sealed class GlobalState {
     object Loading : GlobalState()

@@ -1,17 +1,15 @@
-package com.oratakashi.covid19.ui.home
+package com.oratakashi.covid19.ui.home.local_module
 
 import android.database.Cursor
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.oratakashi.covid19.data.db.Database
-import com.oratakashi.covid19.data.model.localstorage.DataProvince
 import com.oratakashi.covid19.data.model.localstorage.dashboard.DataLocal
 import com.oratakashi.covid19.data.model.province.ResponseProvince
 import com.oratakashi.covid19.data.network.ApiEndpoint
 import com.oratakashi.covid19.root.App
 import io.reactivex.schedulers.Schedulers
-import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -30,7 +28,8 @@ class LocalViewModel @Inject constructor(
 
     override fun getData() {
         endpoint.getDataBNPB("COVID19_Indonesia_per_Provinsi")
-            .map<LocalState>(LocalState::Result)
+            .map<LocalState>(
+                LocalState::Result)
             .onErrorReturn(LocalState::Error)
             .toFlowable()
             .startWith(LocalState.Loading)
@@ -103,5 +102,16 @@ class LocalViewModel @Inject constructor(
             death,
             currentTime
         )
+    }
+
+    fun checkData() : Boolean{
+        val db : Cursor = App.builder!!.apply {
+            from(Database.TABLE_PROVINCE)
+            limit(1, 0)
+            get()
+            close()
+        }.cursor()
+
+        return db.count > 0
     }
 }

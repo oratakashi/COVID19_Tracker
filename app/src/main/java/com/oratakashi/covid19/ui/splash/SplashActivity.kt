@@ -10,11 +10,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.oratakashi.covid19.BuildConfig
 import com.oratakashi.covid19.R
+import com.oratakashi.covid19.root.App
 import com.oratakashi.covid19.ui.main.v1.MainActivity
 import com.oratakashi.covid19.ui.main.v2.SecondaryActivity
 import com.oratakashi.covid19.ui.splash.SplashState.Error
 import com.oratakashi.covid19.ui.splash.SplashState.Loading
 import com.oratakashi.covid19.ui.splash.SplashState.Result
+import com.oratakashi.covid19.utils.NetworkUtils
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_splash.*
 import javax.inject.Inject
@@ -35,9 +37,6 @@ class SplashActivity : DaggerAppCompatActivity() {
 
         tvVersion.text = "Version : ${BuildConfig.VERSION_NAME}"
 
-        startActivity(Intent(applicationContext, SecondaryActivity::class.java))
-        finish()
-
         viewModel.state.observe(this, Observer { state ->
             state?.let{
                 when(it){
@@ -47,7 +46,15 @@ class SplashActivity : DaggerAppCompatActivity() {
                     is Result -> {
                         when(it.data.status){
                             true -> {
-                                startActivity(Intent(applicationContext, MainActivity::class.java))
+                                when(App.sessions!!.getTheme()){
+                                    "basic" -> {
+                                        startActivity(Intent(applicationContext, MainActivity::class.java))
+                                    }
+                                    "advance" -> {
+                                        startActivity(Intent(applicationContext, SecondaryActivity::class.java))
+                                    }
+
+                                }
                                 finish()
                             }
                             false -> {
@@ -72,7 +79,15 @@ class SplashActivity : DaggerAppCompatActivity() {
                                        dialog.dismiss()
                                    }
                                    .setNeutralButton("Ingatkan Nanti"){ dialog, _ ->
-                                       startActivity(Intent(applicationContext, MainActivity::class.java))
+                                       when(App.sessions!!.getTheme()){
+                                           "basic" -> {
+                                               startActivity(Intent(applicationContext, MainActivity::class.java))
+                                           }
+                                           "advance" -> {
+                                               startActivity(Intent(applicationContext, SecondaryActivity::class.java))
+                                           }
+
+                                       }
                                        finish()
                                        dialog.dismiss()
                                    }.show()
@@ -89,15 +104,23 @@ class SplashActivity : DaggerAppCompatActivity() {
             }
         })
 
-//        NetworkUtils.checkConnectivity(this, object : NetworkUtils.NetworkUtilCallback {
-//            override fun onSuccess() {
-//                viewModel.getData()
-//            }
-//
-//            override fun onCancel() {
-//                startActivity(Intent(applicationContext, MainActivity::class.java))
-//                finish()
-//            }
-//        })
+        NetworkUtils.checkConnectivity(this, object : NetworkUtils.NetworkUtilCallback {
+            override fun onSuccess() {
+                viewModel.getData()
+            }
+
+            override fun onCancel() {
+                when(App.sessions!!.getTheme()){
+                    "basic" -> {
+                        startActivity(Intent(applicationContext, MainActivity::class.java))
+                    }
+                    "advance" -> {
+                        startActivity(Intent(applicationContext, SecondaryActivity::class.java))
+                    }
+
+                }
+                finish()
+            }
+        })
     }
 }

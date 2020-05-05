@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,174 +8,164 @@
     android:background="@color/dark_bg"
     android:id="@+id/clBase"
     tools:context=".ui.about.AboutFragment">
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/ivPhoto"
-        android:layout_width="@dimen/size_64"
-        android:layout_height="@dimen/size_64"
-        android:layout_gravity="center"
-        android:src="@drawable/img_no_images"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="@dimen/margin_8"
-        android:layout_marginStart="@dimen/margin_10"
-        app:layout_constraintStart_toEndOf="@+id/ivPhoto"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_18"
-            android:fontFamily="@font/bold"
-            android:text="@string/title_name" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/grey"
-            android:textSize="@dimen/font_12"
-            android:fontFamily="@font/regular"
-            android:text="@string/position" />
-    </LinearLayout>
-
-    <ImageView
-        android:layout_width="@dimen/size_32"
-        android:layout_height="@dimen/size_32"
-        android:src="@drawable/ic_settings"
-        android:layout_marginTop="@dimen/margin_12"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <View
-        android:id="@+id/view2"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/size_1dp"
-        android:layout_marginTop="@dimen/margin_15"
-        android:background="@color/grey"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPhoto" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_20"
-        app:layout_constraintTop_toBottomOf="@+id/view2"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/bold"
-            android:text="@string/title_about_mes"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_18" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/regular"
-            android:text="@string/title_about_me"
-            android:textColor="@color/grey"
-            android:textSize="@dimen/font_14" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/bold"
-            android:layout_marginTop="@dimen/margin_10"
-            android:text="@string/title_description_apps"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_18" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/regular"
-            android:text="@string/title_contact_detail"
-            android:textColor="@color/grey"
-            android:textSize="@dimen/font_14" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/regular"
-            android:text="@string/title_email"
-            android:textColor="@color/grey"
-            android:textSize="@dimen/font_14" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/bold"
-            android:layout_marginTop="@dimen/margin_10"
-            android:text="@string/title_data_source"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_18" />
-        <TextView
-            android:id="@+id/tvSource"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/regular"
-            android:text=""
-            android:textColor="@color/grey"
-            android:textSize="@dimen/font_14" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/bold"
-            android:layout_marginTop="@dimen/margin_10"
-            android:text="@string/title_source_code"
-            android:textColor="@color/white"
-            android:textSize="@dimen/font_18" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/regular"
-            android:text="@string/title_description_source_code"
-            android:textColor="@color/grey"
-            android:textSize="@dimen/font_14" />
-        <TextView
-            android:id="@+id/tvSourceCode"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/regular"
-            android:text=""
-            android:textColor="@color/green"
-            android:textSize="@dimen/font_14" />
+        android:layout_height="wrap_content">
         <LinearLayout
+            android:id="@+id/llHeader"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/margin_20"
-            android:layout_marginTop="@dimen/margin_20"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/margin_15"
+            android:layout_marginStart="@dimen/margin_10"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="2020 © oratakashi | Made With "
-                android:textColor="@color/grey"
-                android:fontFamily="@font/regular"
-                android:layout_gravity="center_vertical"
-                android:textSize="@dimen/font_12"/>
-            <ImageView
-                android:layout_width="@dimen/size_24"
-                android:layout_height="@dimen/size_24"
-                android:src="@drawable/ic_love"
-                android:layout_marginStart="@dimen/margin_5"
-                android:layout_marginEnd="@dimen/margin_5"/>
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_18"
+                android:fontFamily="@font/bold"
+                android:text="@string/title_contributor" />
+
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="From Bandung, Indonesia"
                 android:textColor="@color/grey"
+                android:textSize="@dimen/font_12"
                 android:fontFamily="@font/regular"
-                android:layout_gravity="center_vertical"
-                android:textSize="@dimen/font_12"/>
+                android:text="@string/title_contributor_description" />
         </LinearLayout>
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvContributor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            app:layout_constraintTop_toBottomOf="@+id/llHeader" />
+
+        <ImageView
+            android:id="@+id/ivConfig"
+            android:layout_width="@dimen/size_32"
+            android:layout_height="@dimen/size_32"
+            android:src="@drawable/ic_settings"
+            android:layout_marginTop="@dimen/margin_23"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1dp"
+            android:layout_marginTop="@dimen/margin_15"
+            android:background="@color/grey"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvContributor" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            app:layout_constraintTop_toBottomOf="@+id/view2"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bold"
+                android:layout_marginTop="@dimen/margin_10"
+                android:text="@string/title_description_apps"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_18" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
+                android:text="@string/title_contact_detail"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font_14" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
+                android:text="@string/title_email"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font_14" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bold"
+                android:layout_marginTop="@dimen/margin_10"
+                android:text="@string/title_data_source"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_18" />
+            <TextView
+                android:id="@+id/tvSource"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
+                android:text=""
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font_14" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/bold"
+                android:layout_marginTop="@dimen/margin_10"
+                android:text="@string/title_source_code"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_18" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
+                android:text="@string/title_description_source_code"
+                android:textColor="@color/grey"
+                android:textSize="@dimen/font_14" />
+            <TextView
+                android:id="@+id/tvSourceCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/regular"
+                android:text=""
+                android:textColor="@color/green"
+                android:textSize="@dimen/font_14" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/margin_20"
+                android:layout_marginTop="@dimen/margin_20"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="2020 © oratakashi | Made With "
+                    android:textColor="@color/grey"
+                    android:fontFamily="@font/regular"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/font_12"/>
+                <ImageView
+                    android:layout_width="@dimen/size_24"
+                    android:layout_height="@dimen/size_24"
+                    android:src="@drawable/ic_love"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:layout_marginEnd="@dimen/margin_5"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="From Bandung, Indonesia"
+                    android:textColor="@color/grey"
+                    android:fontFamily="@font/regular"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/font_12"/>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

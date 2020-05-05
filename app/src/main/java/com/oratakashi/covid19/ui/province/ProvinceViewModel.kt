@@ -11,6 +11,7 @@ import com.jakewharton.rxbinding3.widget.textChangeEvents
 import com.oratakashi.covid19.BuildConfig
 import com.oratakashi.covid19.data.db.Database
 import com.oratakashi.covid19.data.model.localstorage.DataProvince
+import com.oratakashi.covid19.data.model.localstorage.dashboard.DataLocal
 import com.oratakashi.covid19.data.model.province.ResponseProvince
 import com.oratakashi.covid19.data.network.ApiEndpoint
 import com.oratakashi.covid19.root.App
@@ -19,8 +20,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class ProvinceViewModel @Inject constructor(
     val endpoint: ApiEndpoint
@@ -139,5 +143,61 @@ class ProvinceViewModel @Inject constructor(
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(observableSearch())
         )
+    }
+
+    fun countData(province : String = "") : DataLocal {
+        val db : Cursor = when(province.isEmpty()){
+            true -> {
+                App.builder!!.apply {
+                    from(Database.TABLE_PROVINCE)
+                    get()
+                    close()
+                }.cursor()
+            }
+            false -> {
+                App.builder!!.apply {
+                    from(Database.TABLE_PROVINCE)
+                    where(Database.provinceState, province)
+                    get()
+                    close()
+                }.cursor()
+            }
+        }
+        db.moveToFirst()
+
+        /**
+         * Prepare for return
+         */
+        var confirmed = 0
+        var recovered = 0
+        var death = 0
+
+        for(i in 0 until db.count){
+            db.moveToPosition(i)
+            confirmed += db.getInt(db.getColumnIndex(Database.confirmed))
+            recovered += db.getInt(db.getColumnIndex(Database.recovered))
+            death += db.getInt(db.getColumnIndex(Database.deaths))
+        }
+
+        val currentTime: String =
+            SimpleDateFormat("dd MMMM yyyy HH:mm", Locale("in", "ID")).format(Date())
+
+        return DataLocal(
+            confirmed,
+            recovered,
+            death,
+            currentTime
+        )
+    }
+
+    fun checkData() : Boolean{
+        val db : Cursor = App.builder!!.apply {
+            from(Database.TABLE_PROVINCE)
+            limit(1, 0)
+            get()
+            close()
+        }.cursor()
+
+        return db.count > 0
     }
 }

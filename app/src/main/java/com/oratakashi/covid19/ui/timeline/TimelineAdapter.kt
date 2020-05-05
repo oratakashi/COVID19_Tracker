@@ -14,7 +14,8 @@ import com.oratakashi.covid19.utils.Tmp
 import com.oratakashi.covid19.utils.VectorDrawableUtils
 import kotlinx.android.synthetic.main.adapter_timeline.view.*
 
-class TimelineAdapter(val data : List<DataTimeline>, val context: Context) : RecyclerView.Adapter<TimelineAdapter.ViewHolder>() {
+class TimelineAdapter(val data : List<DataTimeline>, val context: Context) :
+    RecyclerView.Adapter<TimelineAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.adapter_timeline,

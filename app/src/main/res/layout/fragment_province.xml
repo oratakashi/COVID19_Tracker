@@ -5,7 +5,6 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/dark_bg"
     android:id="@+id/clBase"
     tools:context=".ui.province.ProvinceFragment">
     <LinearLayout
@@ -91,13 +90,15 @@
             android:layout_height="wrap_content">
             <com.ndroid.CoolEditText
                 android:id="@+id/etSearch"
-                style="@style/coolEditTextFlat"
+                style="@style/coolEditTextFlatv2"
                 android:layout_marginTop="@dimen/margin_10"
-                android:layout_marginBottom="@dimen/margin_10"
+                android:layout_marginBottom="@dimen/margin_15"
                 android:layout_toStartOf="@+id/ivShort"
                 android:maxLines="1"
                 android:inputType="text"
                 android:imeOptions="actionDone"
+                android:drawableEnd="@drawable/ic_search"
+                android:drawablePadding="@dimen/padding_10"
                 android:hint="@string/title_province_search"/>
             <ImageView
                 android:id="@+id/ivShort"
@@ -117,6 +118,88 @@
                 android:layout_marginTop="@dimen/margin_13"
                 android:layout_alignParentEnd="true"/>
         </RelativeLayout>
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_15">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginEnd="@dimen/margin_15"
+                    android:background="@drawable/bg_confirmed">
+                    <TextView
+                        android:id="@+id/tvConfirmed"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/font_18"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/bold"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_confirm"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/font_14"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/regular"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginEnd="@dimen/margin_15"
+                    android:background="@drawable/bg_recovered">
+                    <TextView
+                        android:id="@+id/tvRecovered"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/font_18"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/bold"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_recovered"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/font_14"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/regular"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginEnd="@dimen/margin_15"
+                    android:background="@drawable/bg_death">
+                    <TextView
+                        android:id="@+id/tvDeath"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/font_18"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/bold"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/title_deaths"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/font_14"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/regular"/>
+                </LinearLayout>
+            </LinearLayout>
+        </HorizontalScrollView>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvProvince"
             android:layout_width="match_parent"

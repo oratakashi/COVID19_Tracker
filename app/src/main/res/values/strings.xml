@@ -81,4 +81,26 @@
     <string name="title_death_description">dari jumlah terkonfirmasi</string>
     <string name="title_placeholder_percent_recovered">0% Sembuh</string>
     <string name="title_placeholder_percent_death">0% Meninggal</string>
+    <string name="title_basic_theme">Basic Mode</string>
+    <string name="title_basic_description">Mode praktis, mudah di gunakan dan semua informasi dalam genggaman kamu</string>
+    <string name="title_advance_theme">Advance Mode</string>
+    <string name="title_advance_description">Mode Detail, Akses semua fitur di aplikasi ini dengan tampilan lebih lengkap di Advance Mode</string>
+    <string name="title_theme">Theme</string>
+    <string name="title_detail_theme">Pilih mode sesuai seleramu, akses semua fitur di Advance Mode, dan jika hanya butuh fitur basic gunakan basic mode!</string>
+    <string name="title_active">Aktif</string>
+    <string name="title_pencegahan">Pencegahan</string>
+    <string name="title_pencegahan_description">Bagaimana kita mencegah COVID-19</string>
+    <string name="title_description_batuk">Terapkan etika batuk atau bersin (dengan menutup mulut dan hidung), dan jangan meludah sembarangan</string>
+    <string name="title_kebersihan_benda_description">Bersihkan benda yang sering disentuh, untuk meningkatkan kewaspadaan kita supaya lebih bisa menjaga kebersihan di berbagai benda yang biasa dipenuhi kuman</string>
+    <string name="title_masker_description">Gunakan masker jika Anda sakit dan segera periksakan diri ke fasilitas kesehatan terdekat</string>
+    <string name="title_cuci_tangan_description">Cuci tangan sabun karena Hal tersebut dikarenakan sabun butuh waktu untuk mengikat molekul air dan minyak secara bersamaan.</string>
+    <string name="title_ngucek_description">Hindari menyentuh mata, hidung, dan mulut dengan tangan yang belum dicuci</string>
+    <string name="title_olahraga_description">Konsumsi makanan bergizi dan berolahraga, karena dengan mengkonsumsi makanan bergizi dapat meningkatkan daya imun tubuh</string>
+    <string name="title_faq_description">Berbagai pertanyaan seputar COVID-19</string>
+    <string name="title_news_description">Berita Terbaru COVID-19</string>
+    <string name="title_news">Kabar Berita</string>
+    <string name="title_news_loading">Memuat data berita...</string>
+    <string name="title_contributor_description">Orang-orang hebat di balik aplikasi ini</string>
+    <string name="title_contributor">Kontributor</string>
+    <string name="title_open_browser">Buka di Browser</string>
 </resources>

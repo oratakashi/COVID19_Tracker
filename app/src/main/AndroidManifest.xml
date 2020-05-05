@@ -14,9 +14,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.webview.WebViewActivity"
+            android:theme="@style/AppTheme.NoActionBar" ></activity>
+        <activity
             android:name=".ui.main.v2.GlobalDetailActivity"
             android:label="@string/title_activity_global_detail"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.main.v2.SecondaryActivity"
             android:theme="@style/AppTheme.NoActionBar" />

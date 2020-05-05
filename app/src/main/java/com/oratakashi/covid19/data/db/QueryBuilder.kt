@@ -27,6 +27,7 @@ abstract class QueryBuilder {
     var where = ""
     var groupBy = ""
     var orderBy = ""
+    var limit = ""
     var cursor : Cursor?= null
 
     /**
@@ -69,12 +70,18 @@ abstract class QueryBuilder {
     }
 
     fun where(column: String, where : String, operator : String?= null){
-        if(operator == null){
-            this.where = "$column = '$where'"
-        }else if(operator == "like"){
-            this.where = "$column ${operator.toUpperCase()} '%$where%'"
-        }else if(operator == "!="){
-            this.where = "$column $operator '$where'"
+        if(this.where.isEmpty()){
+            if(operator == null){
+                this.where = "$column = '$where'"
+            }else if(operator == "like"){
+                this.where = "$column ${operator.toUpperCase()} '%$where%'"
+            }
+        }else{
+            if(operator == null){
+                this.where += " and $column = '$where'"
+            }else if(operator == "like"){
+                this.where += " and $column ${operator.toUpperCase()} '%$where%'"
+            }
         }
     }
 
@@ -98,6 +105,17 @@ abstract class QueryBuilder {
         }
     }
 
+    fun limit(limit : Int, offset : Int = -1){
+        when(offset == -1){
+            true -> {
+                this.limit = "$limit"
+            }
+            false -> {
+                this.limit = "$limit OFFSET $offset"
+            }
+        }
+    }
+
     fun close(){
         index = 0
         table_name = ""
@@ -106,6 +124,8 @@ abstract class QueryBuilder {
         where_table.clear()
         groupBy = ""
         select = ""
+        limit = ""
+        orderBy = ""
     }
 
     fun get(){

@@ -14,6 +14,8 @@ class Sessions(context: Context) {
         val last_confirmed = "last_confirmed"
         val last_recovered = "last_recovered"
         val last_death = "last_death"
+
+        val theme = "theme"
     }
 
     var pref : SharedPreferences
@@ -58,5 +60,12 @@ class Sessions(context: Context) {
 
     fun getBoolean(key: String) : Boolean{
         return pref.getBoolean(key, false)
+    }
+
+    fun getTheme() : String{
+        /**
+         * To get current saved themes, if user not set theme default theme is basic
+         */
+        return pref.getString(theme, "basic").toString()
     }
 }

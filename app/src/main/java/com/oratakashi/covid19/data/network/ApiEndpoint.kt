@@ -3,6 +3,8 @@ package com.oratakashi.covid19.data.network
 import com.oratakashi.covid19.BuildConfig
 import com.oratakashi.covid19.data.model.confirm.DataConfirm
 import com.oratakashi.covid19.data.model.death.DataDeath
+import com.oratakashi.covid19.data.model.instagram.ResponseInstagram
+import com.oratakashi.covid19.data.model.news.ResponseNews
 import com.oratakashi.covid19.data.model.province.ResponseProvince
 import com.oratakashi.covid19.data.model.recovered.DataRecovered
 import com.oratakashi.covid19.data.model.statistik.ResponseStatistik
@@ -42,4 +44,12 @@ interface ApiEndpoint {
     fun getUpdate(
         @Query("version") version : String = BuildConfig.VERSION_CODE.toString()
     ) : Single<ResponseVersion>
+    @GET("instagram")
+    fun getInstagram(
+        @Query("limit") limit : Int
+    ) : Single<ResponseInstagram>
+    @GET("news")
+    fun getNews(
+        @Query("page") page : Int
+    ) : Single<ResponseNews>
 }

@@ -1,4 +1,4 @@
-package com.oratakashi.covid19.ui.home
+package com.oratakashi.covid19.ui.home.local_module
 
 import com.oratakashi.covid19.data.model.province.ResponseProvince
 

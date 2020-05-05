@@ -5,6 +5,8 @@
     <color name="colorAccent">#1EB700</color>
     <color name="white">#ffffff</color>
     <color name="white_50">#80FFFFFF</color>
+    <color name="white_80">#CCFFFFFF</color>
+    <color name="white_70">#B3FFFFFF</color>
     <color name="background">#ffffff</color>
     <color name="grey">#99FFFFFF</color>
     <color name="light_grey">#61F0F0F0</color>
@@ -39,4 +41,5 @@
     <color name="section">#C9C9C9</color>
 
     <color name="placeholder_bg">#dddddd</color>
+    <color name="placeholder_transparent">#804A4A4A</color>
 </resources>

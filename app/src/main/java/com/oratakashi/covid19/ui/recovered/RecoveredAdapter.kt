@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.oratakashi.covid19.R
 import com.oratakashi.covid19.data.model.localstorage.DataGlobal
 import com.oratakashi.covid19.ui.main.MainInterfaces
+import com.oratakashi.covid19.utils.Converter
 import kotlinx.android.synthetic.main.adapter_list.view.*
 
 class RecoveredAdapter(
@@ -33,9 +34,19 @@ class RecoveredAdapter(
                 "${data[position].countryRegion}"
             }
         }
-        holder.itemView.tvConfirmed.text = "${context.resources.getString(R.string.title_confirm)} : ${data[position].confirmed} Orang"
-        holder.itemView.tvRecovered.text = "${context.resources.getString(R.string.title_recovered)} : ${data[position].recovered} Orang"
-        holder.itemView.tvDeath.text = "${context.resources.getString(R.string.title_deaths)} : ${data[position].deaths} Orang"
+        holder.itemView.tvRecoveredPercent.visibility = View.VISIBLE
+        holder.itemView.tvRecoveredPercent.text = Converter.persentase(
+            data[position].recovered!!.toFloat(),
+            data[position].confirmed!!.toFloat()
+        )+" "+context.resources.getString(R.string.title_recovered)
+        holder.itemView.tvDeathPercent.visibility = View.VISIBLE
+        holder.itemView.tvDeathPercent.text = Converter.persentase(
+            data[position].deaths!!.toFloat(),
+            data[position].confirmed!!.toFloat()
+        )+" "+context.resources.getString(R.string.title_deaths)
+        holder.itemView.tvConfirmed.text = "${Converter.numberFormat(data[position].confirmed!!)} Orang"
+        holder.itemView.tvRecovered.text = "${Converter.numberFormat(data[position].recovered!!)} Orang"
+        holder.itemView.tvDeath.text = "${Converter.numberFormat(data[position].deaths!!)} Orang"
         holder.itemView.llAdapter.setOnClickListener {
             parent.getLocation(data[position].lat!!.toDouble(), data[position].long!!.toDouble())
         }

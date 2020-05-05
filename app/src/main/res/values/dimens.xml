@@ -101,4 +101,7 @@
     <dimen name="size_5">5dp</dimen>
     <dimen name="margin_39">39dp</dimen>
     <dimen name="margin_27">27dp</dimen>
+    <dimen name="margin_18">18dp</dimen>
+    <dimen name="margin_9">9dp</dimen>
+    <dimen name="margin_23">23dp</dimen>
 </resources>

@@ -17,13 +17,16 @@ import com.oratakashi.covid19.BuildConfig
 
 import com.oratakashi.covid19.R
 import com.oratakashi.covid19.data.db.Database
+import com.oratakashi.covid19.data.db.Sessions
 import com.oratakashi.covid19.data.model.localstorage.DataGlobal
+import com.oratakashi.covid19.root.App
 import com.oratakashi.covid19.ui.death.DeathState.Error
 import com.oratakashi.covid19.ui.death.DeathState.Loading
 import com.oratakashi.covid19.ui.death.DeathState.Result
 import com.oratakashi.covid19.ui.main.MainInterfaces
 import com.oratakashi.covid19.ui.sortirdialog.sort_global.SortDialogFragment
 import com.oratakashi.covid19.ui.sortirdialog.SortDialogInterface
+import com.oratakashi.covid19.utils.Converter
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_death.*
 import javax.inject.Inject
@@ -55,7 +58,18 @@ class DeathFragment(val parent : MainInterfaces) : DaggerFragment(), SortDialogI
 
         ButterKnife.bind(this, view)
 
-        adapter = DeathAdapter(data, parent, context!!)
+        adapter = DeathAdapter(data, parent, requireContext())
+
+        when(App.sessions!!.getInt(Sessions.last_confirmed)){
+            0 -> {
+                Toast.makeText(context, "Jumlah data belum tersedia!", Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                tvConfirmed.text = Converter.numberFormat(App.sessions!!.getInt(Sessions.last_confirmed))
+                tvRecovered.text = Converter.numberFormat(App.sessions!!.getInt(Sessions.last_recovered))
+                tvDeath.text = Converter.numberFormat(App.sessions!!.getInt(Sessions.last_death))
+            }
+        }
 
         rvDeath.adapter = adapter
         rvDeath.layoutManager = LinearLayoutManager(context)
@@ -66,7 +80,7 @@ class DeathFragment(val parent : MainInterfaces) : DaggerFragment(), SortDialogI
     }
 
     fun setupViewModel(){
-        viewModel.state.observe(this, Observer { state ->
+        viewModel.state.observe(viewLifecycleOwner, Observer { state ->
             state?.let{
                 when(it){
                     is Loading -> {
@@ -100,7 +114,7 @@ class DeathFragment(val parent : MainInterfaces) : DaggerFragment(), SortDialogI
             }
         })
 
-        viewModel.cacheDeath.observe(this, Observer { cache ->
+        viewModel.cacheDeath.observe(viewLifecycleOwner, Observer { cache ->
             cache?.let{
                 data.clear()
                 it.forEach {

@@ -27,6 +27,7 @@ import com.oratakashi.covid19.ui.province.ProvinceState.Result
 import com.oratakashi.covid19.ui.sortirdialog.SortDialogInterface
 import com.oratakashi.covid19.ui.sortirdialog.sort_indonesia.SortLocalFragment
 import com.oratakashi.covid19.ui.timeline.TimelineActivity
+import com.oratakashi.covid19.utils.Converter
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_province.*
 import javax.inject.Inject
@@ -46,7 +47,7 @@ class ProvinceFragment(val parent : MainInterfaces) : DaggerFragment(), SortDial
     }
 
     val adapter: ProvinceAdapter by lazy {
-        ProvinceAdapter(data, parent, context!!)
+        ProvinceAdapter(data, parent, requireContext())
     }
 
     override fun onCreateView(
@@ -70,18 +71,40 @@ class ProvinceFragment(val parent : MainInterfaces) : DaggerFragment(), SortDial
     }
 
     fun setupViewModel(){
-        viewModel.state.observe(this, Observer { state ->
+        viewModel.state.observe(viewLifecycleOwner, Observer { state ->
             state?.let{
                 when(it){
                     is Loading -> { //Handling Loading Statement
-                        llLoading.visibility = View.VISIBLE
-                        llContent.visibility = View.GONE
-                        llMaintence.visibility = View.GONE
+                        when(viewModel.checkData()){
+                            true -> {
+                                llLoading.visibility = View.GONE
+                                llContent.visibility = View.VISIBLE
+                                llMaintence.visibility = View.GONE
+
+                                viewModel.getCache()
+                                val result = viewModel.countData()
+
+                                tvConfirmed.text = Converter.numberFormat(result.confirm!!)
+                                tvRecovered.text = Converter.numberFormat(result.recovered!!)
+                                tvDeath.text = Converter.numberFormat(result.death!!)
+                            }
+                            false -> {
+                                llLoading.visibility = View.VISIBLE
+                                llContent.visibility = View.GONE
+                                llMaintence.visibility = View.GONE
+                            }
+                        }
                     }
                     is Result -> { //Handling Result Statement
                         llLoading.visibility = View.GONE
                         llContent.visibility = View.VISIBLE
                         llMaintence.visibility = View.GONE
+
+                        val result = viewModel.countData()
+
+                        tvConfirmed.text = Converter.numberFormat(result.confirm!!)
+                        tvRecovered.text = Converter.numberFormat(result.recovered!!)
+                        tvDeath.text = Converter.numberFormat(result.death!!)
 
                         when(it.data.data.isNotEmpty()){
                             true -> {
@@ -103,6 +126,12 @@ class ProvinceFragment(val parent : MainInterfaces) : DaggerFragment(), SortDial
 
                         viewModel.getCache()
 
+                        val result = viewModel.countData()
+
+                        tvConfirmed.text = Converter.numberFormat(result.confirm!!)
+                        tvRecovered.text = Converter.numberFormat(result.recovered!!)
+                        tvDeath.text = Converter.numberFormat(result.death!!)
+
                         Snackbar.make(clBase, "Gagal memuat data!", Snackbar.LENGTH_SHORT)
                             .setAction("Coba Lagi"){
                                 viewModel.getData()
@@ -114,7 +143,7 @@ class ProvinceFragment(val parent : MainInterfaces) : DaggerFragment(), SortDial
                 }
             }
         })
-        viewModel.cacheProvince.observe(this, Observer { cache ->
+        viewModel.cacheProvince.observe(viewLifecycleOwner, Observer { cache ->
             cache?.let{
                 data.clear()
                 it.forEach {

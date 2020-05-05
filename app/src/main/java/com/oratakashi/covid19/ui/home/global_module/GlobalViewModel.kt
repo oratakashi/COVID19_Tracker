@@ -1,4 +1,4 @@
-package com.oratakashi.covid19.ui.home
+package com.oratakashi.covid19.ui.home.global_module
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -21,7 +21,8 @@ class GlobalViewModel @Inject constructor(
 
     override fun getData() {
         endpoint.getData()
-            .map<GlobalState>(GlobalState::Result)
+            .map<GlobalState>(
+                GlobalState::Result)
             .onErrorReturn(GlobalState::Error)
             .toFlowable()
             .startWith(GlobalState.Loading)

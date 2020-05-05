@@ -3,13 +3,28 @@ package com.oratakashi.covid19.ui.about
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import butterknife.ButterKnife
+import butterknife.OnClick
 import com.oratakashi.covid19.BuildConfig
 import com.oratakashi.covid19.R
+import com.oratakashi.covid19.data.db.Sessions
+import com.oratakashi.covid19.data.model.contributor.DataContributor
+import com.oratakashi.covid19.root.App
 import com.oratakashi.covid19.ui.main.MainInterfaces
+import com.oratakashi.covid19.ui.main.v1.MainActivity
+import com.oratakashi.covid19.ui.main.v2.SecondaryActivity
+import com.oratakashi.covid19.ui.theme.ThemeDialogFragment
+import com.oratakashi.covid19.ui.theme.ThemeInterfaces
 import com.oratakashi.covid19.utils.ImageHelper
 import kotlinx.android.synthetic.main.fragment_about.*
 
@@ -17,7 +32,17 @@ import kotlinx.android.synthetic.main.fragment_about.*
 /**
  * A simple [Fragment] subclass.
  */
-class AboutFragment(val parent : MainInterfaces) : Fragment() {
+class AboutFragment(val parent : MainInterfaces) : Fragment(), AboutInterface, ThemeInterfaces {
+
+    val dataKontributor : MutableList<DataContributor> = ArrayList()
+
+    val adapter : AboutAdapter by lazy {
+        AboutAdapter(dataKontributor, this)
+    }
+
+    val viewModel : AboutViewModel by lazy {
+        ViewModelProviders.of(this).get(AboutViewModel::class.java)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +55,8 @@ class AboutFragment(val parent : MainInterfaces) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        ButterKnife.bind(this, view)
+
         parent.getLocation(-6.9201766, 107.6049431, 12f)
 
         tvSource.text = BuildConfig.BASE_URL+"\nhttp://covid19.bnpb.go.id/"
@@ -41,6 +68,51 @@ class AboutFragment(val parent : MainInterfaces) : Fragment() {
             startActivity(i)
         }
 
-        ImageHelper.getPicasso(ivPhoto, "https://instagram.fjog3-1.fna.fbcdn.net/v/t51.2885-15/sh0.08/e35/p640x640/69176405_434317503884119_473784165719279935_n.jpg?_nc_ht=instagram.fjog3-1.fna.fbcdn.net&_nc_cat=107&_nc_ohc=ZRqEk48VSnkAX_fmBNp&oh=2b4bac19132fd5657cdfe2ffdb0db755&oe=5EA7FFCB")
+        rvContributor.adapter = adapter
+        rvContributor.layoutManager = LinearLayoutManager(requireContext(),
+            LinearLayoutManager.HORIZONTAL, false)
+
+        setupViewModel()
+    }
+
+    fun setupViewModel(){
+        viewModel.dataAbout.observe(viewLifecycleOwner, Observer { data ->
+            data?.let{
+                dataKontributor.clear()
+                dataKontributor.addAll(it)
+                adapter.notifyDataSetChanged()
+            }
+        })
+
+        viewModel.getContributor(requireContext())
+    }
+
+    override fun onKontributor(link: String) {
+        val i = Intent(Intent.ACTION_VIEW)
+        i.data = Uri.parse(link)
+        startActivity(i)
+    }
+
+    override fun onThemeChanged(theme: String) {
+        Log.e("theme", theme)
+        if(theme != App.sessions!!.getTheme()){
+            Toast.makeText(context, "Theme Changed!", Toast.LENGTH_SHORT).show()
+            when(theme){
+                "basic" -> {
+                    App.sessions!!.putString(Sessions.theme, "basic")
+                    startActivity(Intent(context, MainActivity::class.java))
+                    requireActivity().finish()
+                }
+                "advance" -> {
+                    App.sessions!!.putString(Sessions.theme, "advance")
+                    startActivity(Intent(context, SecondaryActivity::class.java))
+                    requireActivity().finish()
+                }
+            }
+        }
+    }
+
+    @OnClick(R.id.ivConfig) fun onConfig(){
+        ThemeDialogFragment.newInstance(this).show(childFragmentManager, "dialog")
     }
 }
