@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.github.vipulasri.timelineview.TimelineView
@@ -14,7 +15,7 @@ import com.oratakashi.covid19.utils.Tmp
 import com.oratakashi.covid19.utils.VectorDrawableUtils
 import kotlinx.android.synthetic.main.adapter_timeline.view.*
 
-class TimelineAdapter(val data : List<DataTimeline>, val context: Context) :
+class TimelineAdapter(val data : List<DataTimeline>, val context: Context, val parent : TimelineInterface) :
     RecyclerView.Adapter<TimelineAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -58,6 +59,10 @@ class TimelineAdapter(val data : List<DataTimeline>, val context: Context) :
             "${context.resources.getString(R.string.title_recovered)} : ${data[position].recovered}"
         holder.itemView.tvDeath.text =
             "${context.resources.getString(R.string.title_deaths)} : ${data[position].death}"
+
+        holder.itemView.llAdapter.setOnClickListener {
+            parent.onSelect(data[position])
+        }
     }
 
     private fun setMarker(holder: ViewHolder, drawableResId: Int, colorFilter: Int) {

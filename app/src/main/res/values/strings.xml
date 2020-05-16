@@ -103,4 +103,6 @@
     <string name="title_contributor_description">Orang-orang hebat di balik aplikasi ini</string>
     <string name="title_contributor">Kontributor</string>
     <string name="title_open_browser">Buka di Browser</string>
+    <string name="title_loading_detail_timeline">Memuat Detail Timeline</string>
+    <string name="title_description_empty_timeline_detail">Sepertinya data yang kamu minta saat ini belum tersedia, Coba lagi nanti yah!</string>
 </resources>

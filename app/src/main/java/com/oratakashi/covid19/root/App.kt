@@ -15,9 +15,9 @@ class App : DaggerApplication() {
      * Tempat Deklarasi Retrofit agar bisa di pakai di seluruh aplikasi tanpa deklarasi ulang
      */
     companion object{
-        var service : ApiService?= null
-        var bnpb : ApiBNPB ?= null
-        var orata : ApiOrata ?= null
+//        var service : ApiService?= null
+//        var bnpb : ApiBNPB ?= null
+//        var orata : ApiOrata ?= null
         var builder : QueryBuilder ?= null
         var disposable : CompositeDisposable?= null
         var db : Database ?= null
@@ -26,9 +26,9 @@ class App : DaggerApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        service = ApiService()
-        bnpb = ApiBNPB()
-        orata = ApiOrata()
+//        service = ApiService()
+//        bnpb = ApiBNPB()
+//        orata = ApiOrata()
         disposable = CompositeDisposable()
         db = Database(this)
         sessions = Sessions(this)

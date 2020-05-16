@@ -25,6 +25,8 @@ import com.oratakashi.covid19.ui.statistik.StatistikModule
 import com.oratakashi.covid19.ui.timeline.TimelineActivity
 import com.oratakashi.covid19.ui.timeline.TimelineFragment
 import com.oratakashi.covid19.ui.timeline.TimelineModule
+import com.oratakashi.covid19.ui.timeline.detail.DetailTimelineActivity
+import com.oratakashi.covid19.ui.timeline.detail.DetailTimelineModule
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -120,4 +122,11 @@ abstract class AppBuilder {
     @Presentation
     @ContributesAndroidInjector(modules = [TimelineModule::class])
     abstract fun contributeTimelineFragment() : TimelineFragment
+
+    /**
+     * Register Detail Timeline Activity
+     */
+    @Presentation
+    @ContributesAndroidInjector(modules = [DetailTimelineModule::class])
+    abstract fun contributeDetailTimelineActivity() : DetailTimelineActivity
 }

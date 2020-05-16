@@ -1,6 +1,7 @@
 package com.oratakashi.covid19.ui.timeline
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
@@ -22,6 +23,7 @@ import com.oratakashi.covid19.ui.sortirdialog.sort_timeline.SortTimelineFragment
 import com.oratakashi.covid19.ui.timeline.TimelineState.Error
 import com.oratakashi.covid19.ui.timeline.TimelineState.Loading
 import com.oratakashi.covid19.ui.timeline.TimelineState.Result
+import com.oratakashi.covid19.ui.timeline.detail.DetailTimelineActivity
 import com.oratakashi.covid19.utils.Converter
 import com.oratakashi.covid19.utils.Tmp
 import dagger.android.support.DaggerAppCompatActivity
@@ -30,7 +32,7 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
-class TimelineActivity : DaggerAppCompatActivity(), SortDialogInterface {
+class TimelineActivity : DaggerAppCompatActivity(), SortDialogInterface, TimelineInterface {
 
     @Inject
     lateinit var viewmodelFactory: ViewModelProvider.Factory
@@ -53,7 +55,7 @@ class TimelineActivity : DaggerAppCompatActivity(), SortDialogInterface {
         supportActionBar!!.title = "Timeline Indonesia"
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        adapter = TimelineAdapter(data, this)
+        adapter = TimelineAdapter(data, this, this)
 
         rvTimeline.layoutManager = LinearLayoutManager(this)
         rvTimeline.adapter = adapter
@@ -115,6 +117,10 @@ class TimelineActivity : DaggerAppCompatActivity(), SortDialogInterface {
         })
 
         viewModel.getData()
+    }
+
+    override fun onSelect(data :DataTimeline) {
+
     }
 
     override fun onSort(option: String) {

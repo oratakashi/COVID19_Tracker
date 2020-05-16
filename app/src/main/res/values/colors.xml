@@ -42,4 +42,6 @@
 
     <color name="placeholder_bg">#dddddd</color>
     <color name="placeholder_transparent">#804A4A4A</color>
+    <color name="circle_blue">#0075EB</color>
+    <color name="circle_red">#EB0E00</color>
 </resources>

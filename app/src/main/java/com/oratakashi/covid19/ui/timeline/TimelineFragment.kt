@@ -1,6 +1,7 @@
 package com.oratakashi.covid19.ui.timeline
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -22,6 +23,7 @@ import com.oratakashi.covid19.data.db.Database
 import com.oratakashi.covid19.data.model.localstorage.DataTimeline
 import com.oratakashi.covid19.ui.sortirdialog.SortDialogInterface
 import com.oratakashi.covid19.ui.sortirdialog.sort_timeline.SortTimelineFragment
+import com.oratakashi.covid19.ui.timeline.detail.DetailTimelineActivity
 import com.oratakashi.covid19.utils.Converter
 import com.oratakashi.covid19.utils.Tmp
 import dagger.android.support.DaggerFragment
@@ -34,7 +36,7 @@ import kotlin.collections.ArrayList
 /**
  * A simple [Fragment] subclass.
  */
-class TimelineFragment : DaggerFragment(), SortDialogInterface {
+class TimelineFragment : DaggerFragment(), SortDialogInterface, TimelineInterface {
 
     @Inject
     lateinit var viewmodelFactory: ViewModelProvider.Factory
@@ -61,7 +63,7 @@ class TimelineFragment : DaggerFragment(), SortDialogInterface {
 
         tvDate.text = "Last Updated : ${SimpleDateFormat("dd MMMM yyyy", Locale("in", "ID")).format(Date())}"
 
-        adapter = TimelineAdapter(data, requireContext())
+        adapter = TimelineAdapter(data, requireContext(), this)
 
         rvTimeline.layoutManager = LinearLayoutManager(requireContext())
         rvTimeline.adapter = adapter
@@ -129,6 +131,13 @@ class TimelineFragment : DaggerFragment(), SortDialogInterface {
     override fun onSort(option: String) {
         viewModel.getCache(option, Database.date, etSearch.text.toString())
         Tmp.sort = option
+    }
+
+    override fun onSelect(data :DataTimeline) {
+        val intent = Intent(requireContext(), DetailTimelineActivity::class.java)
+        intent.putExtra("date", data.date)
+        intent.putExtra("data", data)
+        startActivity(intent)
     }
 
     @OnClick(R.id.fab) fun onSort(){

@@ -9,6 +9,7 @@ import com.oratakashi.covid19.data.model.province.ResponseProvince
 import com.oratakashi.covid19.data.model.recovered.DataRecovered
 import com.oratakashi.covid19.data.model.statistik.ResponseStatistik
 import com.oratakashi.covid19.data.model.timeline.ResponseTimeline
+import com.oratakashi.covid19.data.model.timeline.detail.ResponseDetailTimeline
 import com.oratakashi.covid19.data.model.version.ResponseVersion
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -52,4 +53,12 @@ interface ApiEndpoint {
     fun getNews(
         @Query("page") page : Int
     ) : Single<ResponseNews>
+    @GET("{services}/FeatureServer/0/query")
+    fun getDetailTimeline(
+        @Path("services") services : String,
+        @Query("where") where : String,
+        @Query("outFields") outFields : String = "*",
+        @Query("outSR") outSR : String = "4326",
+        @Query("f") f : String = "json"
+    ) : Single<ResponseDetailTimeline>
 }

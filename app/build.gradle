@@ -59,7 +59,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
-    implementation 'com.google.android.material:material:1.2.0-alpha01'
+//    implementation 'com.google.android.material:material:1.2.0-alpha01'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
@@ -110,6 +110,9 @@ dependencies {
 
     // Shimmer
     implementation 'com.facebook.shimmer:shimmer:0.1.0@aar'
+
+    // Chart
+    implementation 'com.txusballesteros:FitChart:1.0'
 
     implementation 'com.wang.avi:library:2.1.3'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
