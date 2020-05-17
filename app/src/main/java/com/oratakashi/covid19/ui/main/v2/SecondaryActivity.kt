@@ -31,16 +31,8 @@ class SecondaryActivity : DaggerAppCompatActivity(),
         setContentView(R.layout.activity_secondary)
 
 //        supportActionBar!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.statusBarColor = Color.TRANSPARENT
-        }
 
-        if (Build.VERSION.SDK_INT >= 21) {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-        }
 
         openFragment(HomeFragment(), "home")
 
