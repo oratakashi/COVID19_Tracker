@@ -5,6 +5,8 @@ import android.database.Cursor
 import android.util.Log
 import com.oratakashi.covid19.data.model.confirm.DataConfirm
 import com.oratakashi.covid19.data.model.death.DataDeath
+import com.oratakashi.covid19.data.model.hospital.DataHospital
+import com.oratakashi.covid19.data.model.hotline.DataHotline
 import com.oratakashi.covid19.data.model.province.DataProvince
 import com.oratakashi.covid19.data.model.recovered.DataRecovered
 import com.oratakashi.covid19.data.model.timeline.DataTimeline
@@ -243,7 +245,7 @@ abstract class QueryBuilder {
 
     fun insert(data : DataTimeline){
         val values = ContentValues()
-        var date =
+        val date =
             SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Date(data.attributes.tanggal!!))
         val array = date.split(" ")
         values.put(Database.date, array[0])
@@ -253,6 +255,29 @@ abstract class QueryBuilder {
         values.put(Database.deaths, data.attributes.death)
 
         App.db!!.insert(values, Database.TABLE_TIMELINE)
+    }
+
+    fun insert(data : DataHotline){
+        val values = ContentValues()
+
+        values.put(Database.province, data.province)
+        values.put(Database.phone, data.phone)
+
+        App.db!!.insert(values, Database.TABLE_HOTLINE)
+    }
+
+    fun insert(data : DataHospital){
+        val values = ContentValues()
+
+        values.put(Database.name, data.attributes.nama)
+        values.put(Database.address, data.attributes.alamat)
+        values.put(Database.phone, data.attributes.telepon)
+        values.put(Database.region, data.attributes.wilayah)
+        values.put(Database.type, data.attributes.tipe)
+        values.put(Database.lat, data.geometry.lat)
+        values.put(Database.long, data.geometry.lang)
+
+        App.db!!.insert(values, Database.TABLE_HOSPITAL)
     }
 
     fun delete(table : String){

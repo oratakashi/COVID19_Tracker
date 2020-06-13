@@ -39,6 +39,7 @@
     <string name="title_check_status">Cek Status</string>
     <string name="title_country_search">Cari Negara</string>
     <string name="title_province_search">Cari Provinsi</string>
+    <string name="title_hospital_search">Cari Rumah Sakit</string>
     <string name="title_sort_asc">Urutkan berdasarkan jumlah terkecil</string>
     <string name="title_sort_desc">Urutkan berdasarkan jumlah terbesar</string>
     <string name="title_sort_abjad">Urutkan berdasarkan abjad</string>
@@ -105,4 +106,14 @@
     <string name="title_open_browser">Buka di Browser</string>
     <string name="title_loading_detail_timeline">Memuat Detail Timeline</string>
     <string name="title_description_empty_timeline_detail">Sepertinya data yang kamu minta saat ini belum tersedia, Coba lagi nanti yah!</string>
+    <string name="title_other">Lainnya</string>
+    <string name="title_sos">Nomor Darurat</string>
+    <string name="title_hospital">Rumah Sakit Rujukan</string>
+    <string name="title_theme_settings">Pengaturan Theme</string>
+    <string name="title_source_code_text">Source Code</string>
+    <string name="title_open_source_description">We Love Open Source</string>
+    <string name="title_github">Github</string>
+    <string name="title_version_app">Versi Aplikasi</string>
+    <string name="title_direction">Petunjuk Jalan</string>
+    <string name="tittle_call_center">Panggil Call Center</string>
 </resources>

@@ -3,6 +3,7 @@ package com.oratakashi.covid19.data.network
 import com.oratakashi.covid19.BuildConfig
 import com.oratakashi.covid19.data.model.confirm.DataConfirm
 import com.oratakashi.covid19.data.model.death.DataDeath
+import com.oratakashi.covid19.data.model.hospital.ResponseHospital
 import com.oratakashi.covid19.data.model.instagram.ResponseInstagram
 import com.oratakashi.covid19.data.model.news.ResponseNews
 import com.oratakashi.covid19.data.model.province.ResponseProvince
@@ -61,4 +62,12 @@ interface ApiEndpoint {
         @Query("outSR") outSR : String = "4326",
         @Query("f") f : String = "json"
     ) : Single<ResponseDetailTimeline>
+    @GET("{services}/FeatureServer/0/query")
+    fun getHospital(
+        @Path("services") services : String,
+        @Query("where") where : String = "1=1",
+        @Query("outFields") outFields : String = "*",
+        @Query("outSR") outSR : String = "4326",
+        @Query("f") f : String = "json"
+    ) : Single<ResponseHospital>
 }

@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
 import androidx.fragment.app.Fragment
+import com.fxn.OnBubbleClickListener
 import com.oratakashi.covid19.R
 import com.oratakashi.covid19.data.model.confirm.DataConfirm
 import com.oratakashi.covid19.data.model.death.DataDeath
@@ -17,6 +18,7 @@ import com.oratakashi.covid19.ui.about.AboutFragment
 import com.oratakashi.covid19.ui.faq_menus.FaqMenusFragment
 import com.oratakashi.covid19.ui.home.HomeFragment
 import com.oratakashi.covid19.ui.main.MainInterfaces
+import com.oratakashi.covid19.ui.other.OtherFragment
 import com.oratakashi.covid19.ui.timeline.TimelineFragment
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_secondary.*
@@ -36,29 +38,28 @@ class SecondaryActivity : DaggerAppCompatActivity(),
 
         openFragment(HomeFragment(), "home")
 
-        bnMenu.setOnNavigationItemSelectedListener {
-            when(it.itemId){
-                R.id.navigation_home -> {
-                    openFragment(HomeFragment(), "home")
-                    true
-                }
-                R.id.navigation_timeline -> {
-                    openFragment(TimelineFragment(), "timeline")
-                    true
-                }
-                R.id.navigation_faq -> {
-                    openFragment(FaqMenusFragment(), "faq")
-                    true
-                }
-                R.id.navigation_about -> {
-                    openFragment(AboutFragment(this), "about")
-                    true
-                }
-                else -> {
-                    false
+//        bnMenu.setOnNavigationItemSelectedListener {
+
+//        }
+
+        bnMenu.addBubbleListener(object : OnBubbleClickListener {
+            override fun onBubbleClick(id: Int) {
+                when(id){
+                    R.id.navigation_home -> {
+                        openFragment(HomeFragment(), "home")
+                    }
+                    R.id.navigation_timeline -> {
+                        openFragment(TimelineFragment(), "timeline")
+                    }
+                    R.id.navigation_faq -> {
+                        openFragment(FaqMenusFragment(), "faq")
+                    }
+                    R.id.navigation_about -> {
+                        openFragment(OtherFragment(), "other")
+                    }
                 }
             }
-        }
+        })
     }
 
     fun getStatusBarHeight(): Int {

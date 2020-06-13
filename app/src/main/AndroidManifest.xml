@@ -13,7 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.timeline.detail.DetailTimelineActivity"></activity>
+        <activity android:name=".ui.hospital.HospitalActivity"></activity>
+        <activity android:name=".ui.hotline.HotlineActivity" />
+        <activity android:name=".ui.about.AboutActivity" />
+        <activity android:name=".ui.timeline.detail.DetailTimelineActivity" />
         <activity
             android:name=".ui.webview.WebViewActivity"
             android:theme="@style/AppTheme.NoActionBar" />

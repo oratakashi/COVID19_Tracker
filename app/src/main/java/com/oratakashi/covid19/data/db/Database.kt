@@ -17,6 +17,8 @@ class Database(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
         const val TABLE_DEATH = "death"
         const val TABLE_PROVINCE = "province"
         const val TABLE_TIMELINE = "timeline"
+        const val TABLE_HOTLINE = "hotline"
+        const val TABLE_HOSPITAL = "hospital"
 
         /**
          * Attribute Table
@@ -31,6 +33,12 @@ class Database(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
         const val deaths : String = "deaths"
         const val case : String = "cases"
         const val date : String = "date"
+        const val phone : String = "phone"
+        const val province : String = "province"
+        const val name : String = "name"
+        const val address : String = "address"
+        const val region : String = "region"
+        const val type : String = "type"
     }
 
     private val createTableConfirm = "CREATE TABLE $TABLE_CONFIRM (" +
@@ -81,6 +89,21 @@ class Database(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
             "$recovered INTEGER," +
             "$deaths INTEGER" +
             ")"
+    private val createTableHotline = "CREATE TABLE $TABLE_HOTLINE (" +
+            "$id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "$province TEXT," +
+            "$phone TEXT" +
+            ")"
+    private val createTableHospital = "CREATE TABLE $TABLE_HOSPITAL (" +
+            "$id INTEGER PRIMARY KEY AUTOINCREMENT," +
+            "$name TEXT," +
+            "$address TEXT," +
+            "$phone TEXT," +
+            "$region TEXT," +
+            "$type TEXT," +
+            "$lat TEXT," +
+            "$long TEXT" +
+            ")"
 
     var context: Context? = null
     var db: SQLiteDatabase? = null
@@ -108,6 +131,8 @@ class Database(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
         db.execSQL(createTableDeath)
         db.execSQL(createTableProvince)
         db.execSQL(createTableTimeline)
+        db.execSQL(createTableHotline)
+        db.execSQL(createTableHospital)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
@@ -116,11 +141,15 @@ class Database(context: Context) : SQLiteOpenHelper(context, DB_NAME, null, DB_V
         db.execSQL("DROP TABLE IF EXISTS $TABLE_DEATH")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_PROVINCE")
         db.execSQL("DROP TABLE IF EXISTS $TABLE_TIMELINE")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_HOTLINE")
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_HOSPITAL")
 
         db.execSQL(createTableConfirm)
         db.execSQL(createTableRecovered)
         db.execSQL(createTableDeath)
         db.execSQL(createTableProvince)
         db.execSQL(createTableTimeline)
+        db.execSQL(createTableHotline)
+        db.execSQL(createTableHospital)
     }
 }

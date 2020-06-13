@@ -11,6 +11,8 @@ import com.oratakashi.covid19.ui.home.global_module.GlobalModule
 import com.oratakashi.covid19.ui.home.HomeFragment
 import com.oratakashi.covid19.ui.home.local_module.LocalModule
 import com.oratakashi.covid19.ui.home.news_module.NewsModule
+import com.oratakashi.covid19.ui.hospital.HospitalActivity
+import com.oratakashi.covid19.ui.hospital.HospitalModule
 import com.oratakashi.covid19.ui.main.v1.MainActivity
 import com.oratakashi.covid19.ui.main.v2.GlobalDetailActivity
 import com.oratakashi.covid19.ui.main.v2.SecondaryActivity
@@ -129,4 +131,11 @@ abstract class AppBuilder {
     @Presentation
     @ContributesAndroidInjector(modules = [DetailTimelineModule::class])
     abstract fun contributeDetailTimelineActivity() : DetailTimelineActivity
+
+    /**
+     * Register Hospital Activity
+     */
+    @Presentation
+    @ContributesAndroidInjector(modules = [HospitalModule::class])
+    abstract fun contributeHospitalActivity() : HospitalActivity
 }

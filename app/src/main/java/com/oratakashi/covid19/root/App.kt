@@ -3,9 +3,6 @@ package com.oratakashi.covid19.root
 import com.oratakashi.covid19.data.db.Database
 import com.oratakashi.covid19.data.db.QueryBuilder
 import com.oratakashi.covid19.data.db.Sessions
-import com.oratakashi.covid19.data.network.ApiBNPB
-import com.oratakashi.covid19.data.network.ApiOrata
-import com.oratakashi.covid19.data.network.ApiService
 import dagger.android.*
 import io.reactivex.disposables.CompositeDisposable
 
