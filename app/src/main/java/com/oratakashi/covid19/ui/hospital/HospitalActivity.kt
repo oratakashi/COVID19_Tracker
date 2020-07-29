@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.oratakashi.covid19.R
+import com.oratakashi.covid19.data.db.Database
 import com.oratakashi.covid19.data.model.localstorage.DataHospital
+import com.oratakashi.covid19.root.App
 import com.oratakashi.covid19.ui.hospital.HospitalState.Error
 import com.oratakashi.covid19.ui.hospital.HospitalState.Loading
 import com.oratakashi.covid19.ui.hospital.HospitalState.Result
@@ -22,6 +24,7 @@ import com.oratakashi.covid19.ui.hospital.dialog.HospitalDialogInterface
 import com.oratakashi.covid19.utils.Utility
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_hospital.*
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 class HospitalActivity : DaggerAppCompatActivity(), HospitalInterface, HospitalDialogInterface {
@@ -55,12 +58,20 @@ class HospitalActivity : DaggerAppCompatActivity(), HospitalInterface, HospitalD
                 when(it){
                     is Loading  -> srHospital.isRefreshing = true
                     is Result   -> {
-                        srHospital.isRefreshing = false
-
-                        viewModel.cacheData(it.data.data)
+                        GlobalScope.launch(Dispatchers.IO){
+                            App.builder!!.delete(Database.TABLE_HOSPITAL)
+                        }
+                        GlobalScope.async(Dispatchers.IO) {
+                            viewModel.cacheData(it.data.data)
+                            withContext(Dispatchers.Main){
+                                viewModel.getCache()
+                                srHospital.isRefreshing = false
+                            }
+                        }
                     }
                     is Error    -> {
                         srHospital.isRefreshing = false
+
 
                         viewModel.getCache()
 
@@ -119,7 +130,9 @@ class HospitalActivity : DaggerAppCompatActivity(), HospitalInterface, HospitalD
     override fun onResume() {
         super.onResume()
         if(viewModel.checkCache()){
-            viewModel.getCache()
+            GlobalScope.launch(Dispatchers.IO){
+                viewModel.getCache()
+            }
         }else{
             viewModel.getData()
         }

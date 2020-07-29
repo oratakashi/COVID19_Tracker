@@ -178,6 +178,8 @@ abstract class QueryBuilder {
             query += orderBy
         }
 
+        Log.e("Query", query)
+
         cursor = App.db!!.getCursor( query )
     }
 
@@ -278,6 +280,7 @@ abstract class QueryBuilder {
         values.put(Database.long, data.geometry.lang)
 
         App.db!!.insert(values, Database.TABLE_HOSPITAL)
+        Log.e("Insert", "New Data has been inserted")
     }
 
     fun delete(table : String){

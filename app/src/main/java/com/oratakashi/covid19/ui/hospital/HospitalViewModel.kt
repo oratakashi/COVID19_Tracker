@@ -14,6 +14,7 @@ import com.oratakashi.covid19.root.App
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -42,17 +43,10 @@ class HospitalViewModel @Inject constructor(
             .let { App.disposable!!::add }
     }
 
-    fun cacheData(data : List<com.oratakashi.covid19.data.model.hospital.DataHospital>){
-        /**
-         * Remove Old Cache
-         */
-        App.builder!!.delete(Database.TABLE_HOSPITAL)
-
+    suspend fun cacheData(data : List<com.oratakashi.covid19.data.model.hospital.DataHospital>){
         data.forEach {
             App.builder!!.insert(it)
         }
-
-        getCache()
     }
 
     fun getCache(keyword : String = "", code : Int = 0){

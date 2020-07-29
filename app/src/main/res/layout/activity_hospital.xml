@@ -48,7 +48,7 @@
         android:id="@+id/rlSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:visibility="visible"
         android:background="@drawable/bg_round_dark_blue"
         android:padding="@dimen/padding_5"
         android:layout_marginStart="@dimen/margin_15"
